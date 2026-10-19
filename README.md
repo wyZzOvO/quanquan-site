@@ -6,7 +6,7 @@
 - **页面**：首页、功能、游戏总览、四个游戏专题（双影奇境、星露谷物语、泰拉瑞亚、怪物猎人）、下载、关于半亩晴空、支持、404，
   以及 `robots.txt`、`sitemap.xml`、`llms.txt`。协议沿用现有的 `/legal/*.html`（由 App 协议源导出，见 quanquan 仓库），官网只链接不另写。
 - **部署**：现有域名根路径（`https://www.monster-ovo.cn/`），`/web/`、`/api/`、`/im`、`/legal/`、`/s/`、`/r/`、`/t/`、`/creator`、`/.well-known/` 继续由原来的服务处理。详见 [deploy/README.md](deploy/README.md)。
-- **上线前置条件**：网站 ICP 备案号（与域名、主体对应）没有填写时，正式构建会被拦下。见下文「上线前必须完成」。
+- **备案**：没有网站 ICP 备案号时正式构建会被拦下。2026-10-19 起暂用域名现有的网站备案号 `京ICP备2024092535号-1`（个人主体）上线，公司备案通过后替换，见 [docs/filing-plan.md](docs/filing-plan.md)。
 
 ## 常用命令
 

@@ -21,7 +21,7 @@
 ```bash
 cd ~/quanquan-site
 ssh ubuntu@62.234.35.78 'sudo mkdir -p /var/www/quanquan-site && sudo chown ubuntu:ubuntu /var/www/quanquan-site'
-./deploy/deploy.sh          # 单测 → 正式构建与检查 → 上传 → 切换 current → 冒烟检查（此时根地址还是跳 /web/，冒烟会提示首页不对，属正常）
+DEPLOY_SKIP_SMOKE=1 ./deploy/deploy.sh   # 单测 → 正式构建与检查 → 上传 → 切换 current（根地址还没接管，先跳过冒烟检查）
 ./deploy/install-nginx.sh   # 接管根地址：装 nginx 片段、去掉网页版片段里的根地址跳转、nginx -t 通过才重载，不通过自动还原
 ./deploy/smoke.sh           # 官网页面、状态码、安全响应头，以及 /web/、/api/、/legal/、/s/、/.well-known/、/im 没有被接管
 ```

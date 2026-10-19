@@ -96,12 +96,12 @@ test('网页版地址只能是同域 /web/ 或白名单 https', () => {
 
 test('App 备案号不能当作网站 ICP 备案号，格式错误也拦下', () => {
   const files = contentFiles()
-  const appIcp = files['company.yaml']!.replace('  icp: null', '  icp: 京ICP备2024092535号-1A')
-  assert.ok(problemsOf(() => load({ 'company.yaml': appIcp })).some((p) => p.includes('是 App 备案号')))
-  const bad = files['company.yaml']!.replace('  icp: null', '  icp: 备案中')
-  assert.ok(problemsOf(() => load({ 'company.yaml': bad })).some((p) => p.includes('格式不对')))
-  const good = files['company.yaml']!.replace('  icp: null', '  icp: 湘ICP备2026012345号-1')
-  assert.equal(load({ 'company.yaml': good }).company.filings.icp, '湘ICP备2026012345号-1')
+  // 不管当前填的是什么，都替换 icp 这一行
+  const withIcp = (value: string) => files['company.yaml']!.replace(/^ {2}icp: .*$/m, `  icp: ${value}`)
+  assert.ok(problemsOf(() => load({ 'company.yaml': withIcp('京ICP备2024092535号-1A') })).some((p) => p.includes('是 App 备案号')))
+  assert.ok(problemsOf(() => load({ 'company.yaml': withIcp('备案中') })).some((p) => p.includes('格式不对')))
+  assert.equal(load({ 'company.yaml': withIcp('湘ICP备2026012345号-1') }).company.filings.icp, '湘ICP备2026012345号-1')
+  assert.equal(load({ 'company.yaml': withIcp('null') }).company.filings.icp, null)
 })
 
 test('示例域名、占位邮箱不能进入内容', () => {

@@ -6,7 +6,7 @@
 # → 原子切换软链接 current → 只保留最近 DEPLOY_KEEP 个版本 → 记录发布日志 → 冒烟检查。
 # 静态文件，nginx 不用重载；首次接管根地址另外执行 ./deploy/install-nginx.sh。
 # 可用环境变量覆盖：DEPLOY_HOST（默认 ubuntu@62.234.35.78）、DEPLOY_SITE_ROOT（默认 /var/www/quanquan-site）、
-#   DEPLOY_KEEP（默认 5）、SITE_URL（默认 https://www.monster-ovo.cn）
+#   DEPLOY_KEEP（默认 5）、SITE_URL（默认 https://www.monster-ovo.cn）、DEPLOY_SKIP_SMOKE=1（首次发布时跳过冒烟检查）
 # 回滚：./deploy/rollback.sh
 set -euo pipefail
 
@@ -69,6 +69,10 @@ printf '%s\t%s\t%s\tprev=%s\n' \"\$(date '+%F %T')\" '$VERSION' \"\$(id -un)\" \
 ls -1dt releases/* | tail -n +$((KEEP + 1)) | while read -r old; do [ \"\$old\" != \"\$REL\" ] && rm -rf \"\$old\"; done
 echo \"current -> \$(readlink current)\""
 
+if [ "${DEPLOY_SKIP_SMOKE:-0}" = 1 ]; then
+  echo "发布完成。按 DEPLOY_SKIP_SMOKE=1 跳过冒烟检查（首次发布、还没执行 install-nginx.sh 时用）"
+  exit 0
+fi
 echo "发布完成。冒烟检查："
 ./deploy/smoke.sh || {
   echo "冒烟检查没有通过。如需回滚：./deploy/rollback.sh" >&2
