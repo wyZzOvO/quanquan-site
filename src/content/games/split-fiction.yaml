@@ -25,8 +25,8 @@ titles:
     name: 双影奇境
     englishName: Split Fiction
     supportStatus: open
-    openPlatforms: [Steam, PlayStation, Xbox, Switch]
-    platformNote: 目前使用通用找队方式：发车时选择平台、模式和角色（米欧或佐伊），其他约定写在队伍说明里。双影奇境的 Switch 版指 Nintendo Switch 2 版。
+    openPlatforms: [Steam, PlayStation, Xbox, Switch 2]
+    platformNote: 目前使用通用找队方式：发车时选择平台、模式和角色（米欧或佐伊），其他约定写在队伍说明里。
     officialSite: https://www.ea.com/games/split-fiction/split-fiction
 
 scenes:
