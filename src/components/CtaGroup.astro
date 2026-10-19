@@ -1,0 +1,36 @@
+---
+/**
+ * 主操作组（需求文档 5.3）：有已上线渠道时"下载玉米圈"，否则"查看获取方式"；
+ * 网页版已开放时并排给出"进入网页版"，未开放时不显示（不展示不可用的按钮）。
+ */
+import { content } from '../lib/content.ts'
+import { primaryCta } from '../lib/downloads.ts'
+import { webEntryHref } from '../lib/entries.ts'
+
+interface Props {
+  /** 游戏页传入带游戏编码的网页版地址 */
+  webHref?: string | null
+  webLabel?: string
+  align?: 'start' | 'center'
+  /** 深色区块里用描边样式 */
+  tone?: 'light' | 'dark'
+}
+
+const { webHref, webLabel = '进入网页版', align = 'start', tone = 'light' } = Astro.props
+const cta = primaryCta(content.releases)
+const web = webHref === undefined ? webEntryHref(content.releases) : webHref
+---
+
+<div class:list={['actions', { center: align === 'center' }]}>
+  <a class:list={['btn', tone === 'dark' ? 'btn-secondary' : 'btn-primary']} href={cta.href}>{cta.label}</a>
+  {
+    web ? (
+      <a class="link-more" href={web}>
+        {webLabel}
+        <span class="chev" aria-hidden="true">
+          ›
+        </span>
+      </a>
+    ) : null
+  }
+</div>

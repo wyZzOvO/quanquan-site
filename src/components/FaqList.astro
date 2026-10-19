@@ -1,0 +1,116 @@
+---
+/**
+ * FAQ（需求文档 11.3、FR05）：原生 <details>，禁用脚本时也能展开阅读；问题是标题，答案在源代码里可直接读取。
+ * 答案支持段落与白名单链接（renderInline 会对其余内容转义）。
+ */
+import { paragraphs, renderInline } from '../lib/links.ts'
+
+interface Props {
+  items: readonly { id: string; question: string; answer: string }[]
+  /** 锚点前缀，同页多组 FAQ 时区分 */
+  idPrefix?: string
+  headingLevel?: 'h3' | 'h4'
+}
+
+const { items, idPrefix = 'faq', headingLevel = 'h3' } = Astro.props
+const Heading = headingLevel
+---
+
+<div class="faq-list">
+  {
+    items.map((item) => (
+      <details class="faq" id={`${idPrefix}-${item.id}`}>
+        <summary>
+          <Heading class="q">{item.question}</Heading>
+          <span class="icon" aria-hidden="true" />
+        </summary>
+        <div class="a prose">
+          {paragraphs(item.answer).map((p) => (
+            <p set:html={renderInline(p)} />
+          ))}
+        </div>
+      </details>
+    ))
+  }
+</div>
+
+<script>
+  import '../scripts/faq.ts'
+</script>
+
+<style>
+  .faq-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .faq {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 64px;
+    padding: 16px 40px 16px 0;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .q {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+  }
+
+  .icon::before,
+  .icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--text-2);
+    transition: transform 200ms var(--ease);
+  }
+
+  .icon::after {
+    transform: rotate(90deg);
+  }
+
+  .faq[open] .icon::after {
+    transform: rotate(0deg);
+  }
+
+  .a {
+    padding: 0 0 22px;
+    color: var(--text-2);
+    font-size: 17px;
+  }
+
+  .a :global(a) {
+    text-decoration: underline;
+  }
+
+  @media print {
+    .icon {
+      display: none;
+    }
+  }
+</style>

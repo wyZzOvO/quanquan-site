@@ -1,0 +1,94 @@
+---
+/**
+ * 全站布局：<head> 元信息（标题、描述、规范地址、OG、站点验证、JSON-LD）+ 顶栏 + 正文 + 页脚。
+ * 预览与开发环境一律 noindex（需求文档 12.3、16.2）。
+ */
+import '../styles/global.css'
+import SiteHeader from '../components/SiteHeader.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+import Breadcrumbs from '../components/Breadcrumbs.astro'
+import { content, siteEnv } from '../lib/content.ts'
+import { absoluteUrl, buildJsonLd, serializeJsonLd, type PageSeo } from '../lib/seo.ts'
+
+interface Props {
+  seo: PageSeo
+  /** 产品截图的绝对地址（写进 SoftwareApplication.screenshot） */
+  screenshots?: string[]
+  /** 是否显示可见的面包屑（首页不显示） */
+  showBreadcrumbs?: boolean
+}
+
+const { seo, screenshots = [], showBreadcrumbs = seo.breadcrumbs.length > 0 } = Astro.props
+const { settings, company, product, releases } = content
+const site = siteEnv.siteUrl
+const canonical = absoluteUrl(site, seo.path)
+const indexable = siteEnv.indexable && seo.indexable !== false
+const ogImage = absoluteUrl(site, seo.ogImage)
+const jsonLd = buildJsonLd(
+  {
+    siteUrl: site,
+    siteName: settings.siteName,
+    company,
+    product,
+    releases,
+    logo: { url: absoluteUrl(site, '/icon-512.png'), width: 512, height: 512 },
+  },
+  seo,
+  screenshots,
+)
+const v = settings.verification
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    {seo.keywords?.length ? <meta name="keywords" content={seo.keywords.join(',')} /> : null}
+    {seo.indexable !== false ? <link rel="canonical" href={canonical} /> : null}
+    <meta name="robots" content={indexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow'} />
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+    <meta name="author" content={company.legalName} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={settings.siteName} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={seo.ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {v.baidu ? <meta name="baidu-site-verification" content={v.baidu} /> : null}
+    {v.google ? <meta name="google-site-verification" content={v.google} /> : null}
+    {v.bing ? <meta name="msvalidate.01" content={v.bing} /> : null}
+    {v.so360 ? <meta name="360-site-verification" content={v.so360} /> : null}
+    {v.sogou ? <meta name="sogou_site_verification" content={v.sogou} /> : null}
+
+    <script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <SiteHeader currentPath={seo.path} />
+    <main id="main" tabindex="-1">
+      {showBreadcrumbs ? <Breadcrumbs items={seo.breadcrumbs} /> : null}
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      import '../scripts/reveal.ts'
+    </script>
+  </body>
+</html>

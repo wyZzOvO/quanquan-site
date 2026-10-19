@@ -1,0 +1,45 @@
+---
+/**
+ * 构建时生成的二维码（SVG，无脚本）。指向稳定的页面地址，不编码会过期的安装包地址（需求文档 8.2）；
+ * 深色模块、白底、四格留白，旁边由调用方显示可读网址。
+ */
+import { encode } from 'uqr'
+
+interface Props {
+  value: string
+  label: string
+  size?: number
+}
+
+const { value, label, size = 160 } = Astro.props
+const qr = encode(value, { ecc: 'M', border: 4 })
+const n = qr.size
+let d = ''
+qr.data.forEach((row, y) => {
+  row.forEach((on, x) => {
+    if (on) {
+      d += `M${x} ${y}h1v1h-1z`
+    }
+  })
+})
+---
+
+<svg
+  class="qr"
+  viewBox={`0 0 ${n} ${n}`}
+  width={size}
+  height={size}
+  role="img"
+  aria-label={label}
+  shape-rendering="crispEdges"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width={n} height={n} fill="#ffffff"></rect>
+  <path d={d} fill="#16161e"></path>
+</svg>
+
+<style>
+  .qr {
+    border-radius: 12px;
+  }
+</style>

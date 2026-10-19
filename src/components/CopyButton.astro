@@ -1,0 +1,38 @@
+---
+/**
+ * 复制按钮（需求文档 11.1）：只在用户点击时写剪贴板，成功或失败都有文字反馈（读屏可读），不只改变颜色。
+ * 没有脚本时按钮隐藏，旁边的文字仍可手动选择复制。
+ */
+interface Props {
+  value: string
+  label?: string
+}
+
+const { value, label = '复制' } = Astro.props
+---
+
+<span class="copy" data-copy-wrap hidden>
+  <button type="button" class="btn btn-small btn-secondary" data-copy={value}>{label}</button>
+  <span class="status small" role="status" aria-live="polite" data-copy-status></span>
+</span>
+
+<script>
+  import '../scripts/copy.ts'
+</script>
+
+<style>
+  .copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .copy[hidden] {
+    display: none;
+  }
+
+  .status {
+    color: var(--success);
+    font-weight: 600;
+  }
+</style>

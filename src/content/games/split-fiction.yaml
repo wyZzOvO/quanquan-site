@@ -1,0 +1,140 @@
+# 双影奇境专题（需求文档 7.1、7.2）。场景文案是产品说明，不构成游戏官方机制说明；
+# officialFacts 只写有官方来源的规则，并记录核对日期。双影专属的进度、剧透字段上线前，不写成已支持。
+slug: split-fiction
+status: published
+order: 1
+tier: primary
+displayName: 双影奇境
+englishName: Split Fiction
+art: split-fiction
+
+seo:
+  title: 双影奇境找搭子与双人开黑 - 玉米圈
+  description: 想一起首通双影奇境，或者找人接着上次的进度玩？在玉米圈先说好共同时间、当前进度和剧透习惯，再开始两个人的旅程。
+  keywords: [双影奇境找搭子, 双影奇境双人, 双影奇境联机, Split Fiction 找搭子]
+
+card:
+  tagline: 两个人，一起走完一段旅程
+  summary: 想一起首通，也想下次接着玩。先说好时间、进度和剧透习惯，再出发。
+
+h1: 找个愿意一起走完|双影奇境的搭子
+lead: 双影奇境要两个人一起玩，搭子合不合拍，决定了这段旅程能不能走完。想一起首通，也想在下一次接着玩：在玉米圈先说好共同时间、当前进度和剧透习惯，再开始两个人的旅程。
+
+titles:
+  - code: split_fiction
+    name: 双影奇境
+    englishName: Split Fiction
+    supportStatus: open
+    openPlatforms: [Steam, PlayStation, Xbox, Switch]
+    platformNote: 目前使用通用找队方式：发车时选择平台、模式和角色（米欧或佐伊），其他约定写在队伍说明里。双影奇境的 Switch 版指 Nintendo Switch 2 版。
+    officialSite: https://www.ea.com/games/split-fiction/split-fiction
+
+scenes:
+  - title: 一起首通
+    text: 两个人都没玩过，想从头开始，一起经历每一次分岔。
+  - title: 接着上次的进度
+    text: 已经打到中途，想找人从某一章继续，或者固定和同一个人玩到通关。
+  - title: 不想被剧透
+    text: 希望搭子不提前讲后面的剧情，卡关时也只在你开口后才给提示。
+  - title: 固定时间慢慢玩
+    text: 每周约一两个晚上，一次玩一两章，不赶进度。
+
+agreements:
+  intro: 两个人的游戏，最怕玩到一半对不上。组队前把这几件事说清楚，写在队伍标题或说明里：
+  items:
+    - title: 共同时间
+      text: 哪几天、几点开始、一次大概玩多久，下次什么时候接着玩。
+    - title: 当前进度
+      text: 首通还是续玩；续玩的话从哪一章开始、用谁的存档。
+    - title: 剧透与提示
+      text: 能不能聊后面的剧情，卡关时要不要提示、提示到什么程度。
+    - title: 角色与平台
+      text: 谁玩米欧、谁玩佐伊；两个人各在什么平台，需不需要跨平台联机。
+
+steps:
+  - title: 选好双影奇境
+    text: 在找队页选择双影奇境，看看有没有时间和进度合适的队伍。
+  - title: 写清约定再发车
+    text: 没有合适的就自己发车：选好平台、模式和角色，在说明里写明时间、进度和剧透偏好。
+  - title: 确认后一起出发
+    text: 对方加入后，在队伍里确认联机方式，进入队伍语音开始游戏。
+
+compatibility:
+  officialFacts:
+    - text: 双影奇境只能两个人一起玩：同屏分屏、本地联机和在线联机都是 2 人。
+      sourceName: 任天堂（Nintendo Switch 2 版介绍页）
+      sourceUrl: https://www.nintendo.com/en-gb/Games/Nintendo-Switch-2-games/SPLIT-FICTION-2792072.html
+    - text: 好友通行证免费：一人拥有完整版，另一人下载好友通行证，就能一起在线玩完整游戏；需要保持联网。
+      sourceName: EA 官方新闻（2025 年 2 月 20 日）
+      sourceUrl: https://www.ea.com/games/split-fiction/split-fiction/news/what-is-the-friends-pass
+    - text: PS5、Xbox Series X|S、PC 与 Nintendo Switch 2 之间可以跨平台联机，好友通行证同样适用。
+      sourceName: EA 官方新闻（2025 年 4 月 15 日）
+      sourceUrl: https://www.ea.com/games/split-fiction/split-fiction/news/nintendo-switch-2-features
+    - text: 跨平台联机需要免费的 EA 账号，并通过 EA 好友列表邀请；在主机上在线游玩还需要对应平台的会员（如 PlayStation Plus、Xbox Game Pass）。
+      sourceName: EA 帮助中心（2026 年 4 月 7 日更新）
+      sourceUrl: https://help.ea.com/en/help/split-fiction/how-to-play/
+  checkedAt: 2026-10-19
+  productNotes:
+    - 双影奇境目前使用玉米圈的通用找队方式：可以选择平台、模式（主线流程、支线故事）和角色（米欧、佐伊）。
+    - 首通、续玩、剧透偏好等还没有专门的筛选项，请写在队伍标题或说明里。
+  userChecks:
+    - 两个人是否都有 EA 账号，并已关联各自的平台账号。
+    - 谁拥有完整版、谁使用好友通行证。
+    - 续玩时用谁的存档、从哪一章开始。
+
+faqs:
+  - id: first-or-continue
+    question: 首通和续玩，怎么分别找人？
+    answer: |
+      发车时在标题里写明"首通"或"续玩"。续玩的话写上从哪一章开始、用谁的存档，再写上大概的游玩时间，进度对得上的人更容易找到你。
+
+      找队时也先看队伍标题和说明，确认对方的进度和你一致再申请加入。
+  - id: spoilers
+    question: 不想被剧透，要怎么说明？
+    answer: |
+      在队伍说明里直接写"不剧透"，以及卡关时希望对方怎么做，例如"卡关先自己试，我说要提示再提示"。组队前在队伍聊天里再确认一次，开玩以后就不用反复提醒。
+  - id: platform
+    question: 不同平台的人能一起玩双影奇境吗？
+    answer: |
+      可以。按 EA 官方说明，PS5、Xbox Series X|S、PC 与 Nintendo Switch 2 之间支持跨平台联机，需要免费的 EA 账号；好友通行证同样适用。以上以官方最新说明为准，组队前请先和对方确认平台与账号。
+
+      玉米圈提供找搭子与沟通入口，不改变游戏本身的联机规则。
+  - id: friends-pass
+    question: 只有一个人买了游戏，能一起玩吗？
+    answer: |
+      按 EA 官方说明，一人拥有完整版时，另一人可以下载免费的好友通行证，在线一起玩完整游戏。发车时可以在说明里写明"我有完整版，你用好友通行证就行"。
+
+screen: null
+screenAlt: null
+demoParties:
+  - initial: 双
+    title: 周六晚首通｜PC｜不剧透
+    meta: 双影奇境 · Steam · 主线流程 · 开麦
+    tags:
+      - text: 同平台
+        tone: green
+      - text: 1/2 · 还差 1 人
+        tone: amber
+      - text: 周六 20:00
+        tone: gray
+      - text: 我玩佐伊
+        tone: violet
+    host: 小鹿
+    action: 申请加入
+  - initial: 双
+    title: 从第五章接着打｜每周三晚上
+    meta: 双影奇境 · PlayStation · 主线流程 · 开麦
+    tags:
+      - text: 续玩
+        tone: violet
+      - text: 1/2 · 还差 1 人
+        tone: amber
+      - text: 周三 21:30
+        tone: gray
+    host: 阿澈
+    action: 申请加入
+
+related: [stardew-valley, terraria, monster-hunter]
+reviewedBy: 玉米圈产品团队
+updatedAt: 2026-10-19
+scope: 适用于在玉米圈为双影奇境找搭子；游戏内的联机、跨平台与好友通行证规则以游戏官方说明为准。

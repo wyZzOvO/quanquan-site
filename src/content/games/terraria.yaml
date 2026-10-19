@@ -1,0 +1,114 @@
+# 泰拉瑞亚专题。玉米圈当前开放范围见 docs/campaign-games-v1.md：各平台各自成组，只开 Steam，跨平台标为"未核实"。
+slug: terraria
+status: published
+order: 3
+tier: secondary
+displayName: 泰拉瑞亚
+englishName: Terraria
+art: terraria
+
+seo:
+  title: 泰拉瑞亚找搭子与开荒组队 - 玉米圈
+  description: 开新世界、推进 Boss，或者一起建家。在玉米圈找泰拉瑞亚搭子，先把世界阶段、难度、装备约定和原版或模组说清楚。
+  keywords: [泰拉瑞亚找搭子, 泰拉瑞亚联机, 泰拉瑞亚开荒组队, tModLoader 联机]
+
+card:
+  tagline: 一起开荒，也一起把世界建起来
+  summary: 开新世界、推进 Boss，或一起建家。先说清世界阶段和装备约定。
+
+h1: 找人一起开荒，|也一起把世界建起来
+lead: 在泰拉瑞亚，一起开荒和一起建家是两种完全不同的玩法。开新世界、推进 Boss，或者一起慢慢建家：在玉米圈先把世界阶段、难度、装备约定和原版或模组说清楚，再进同一个世界。
+
+titles:
+  - code: terraria
+    name: 泰拉瑞亚
+    englishName: Terraria
+    supportStatus: open
+    openPlatforms: [Steam]
+    platformNote: 目前只开放 Steam 版的找队与长期世界；手机版、主机版等其他平台暂未开放匹配。
+    officialSite: https://terraria.org/
+
+scenes:
+  - title: 开一个新世界
+    text: 从零开荒，挖矿、盖第一间房子、打第一个 Boss。
+  - title: 推进 Boss 进度
+    text: 卡在某个 Boss 前，找人一起准备装备、一起挑战。
+  - title: 一起建家
+    text: 不赶进度，盖房子、做布局，慢慢经营一个世界。
+  - title: 玩模组整合包
+    text: 用 tModLoader 玩大型模组，找装了同样模组的人。
+
+agreements:
+  intro: 同一个世界，可能有完全不同的玩法。进世界之前，先把这几件事说清楚：
+  items:
+    - title: 世界阶段
+      text: 新世界，还是已经打到困难模式；现在卡在哪个 Boss。
+    - title: 难度
+      text: 世界和角色用什么难度，旅行模式还是经典、专家、大师。
+    - title: 角色与装备
+      text: 带新角色还是老角色，能不能带入其他世界的装备。
+    - title: 原版还是模组
+      text: 原版和 tModLoader 模组分开玩；用模组的话，模组列表要一致。
+    - title: 开房方式
+      text: 谁来开世界、通过 Steam 邀请还是其他方式加入。
+
+steps:
+  - title: 选择泰拉瑞亚
+    text: 在找队页或"长期世界"里选择泰拉瑞亚，看看正在招人的世界。
+  - title: 说清世界与约定
+    text: 写明世界阶段、难度、原版或模组，以及装备约定。
+  - title: 进世界开荒
+    text: 加入后在队伍里确认开房方式，进语音一起开荒。
+
+compatibility:
+  officialFacts:
+    - text: PlayStation 版在线最多 8 人一起玩（Xbox、Switch 版的商店页同样标注最多 8 人）。
+      sourceName: PlayStation 商店
+      sourceUrl: https://store.playstation.com/en-us/concept/205080
+    - text: 游戏版本一致时，PC（含专用服务器）与手机版已经可以通过局域网或 IP 加端口互相联机；主机版目前还不能与其他平台联机。
+      sourceName: 泰拉瑞亚官方论坛（2026 年 2 月 26 日）
+      sourceUrl: https://forums.terraria.org/index.php?threads/terraria-state-of-the-game-february-2026.148264/
+    - text: 主机的跨平台联机计划在 1.4.6 更新中推出，官方尚未公布日期。
+      sourceName: 泰拉瑞亚官方论坛（2026 年 9 月 24 日）
+      sourceUrl: https://forums.terraria.org/index.php?threads/terraria-state-of-the-game-september-2026.151999/
+    - text: 国内发行的手机版是单独的版本，服务器与更新节奏和国际版不同。
+      sourceName: 泰拉瑞亚官方论坛（2026 年 1 月 27 日）
+      sourceUrl: https://forums.terraria.org/index.php?threads/terraria-1-4-5-bigger-boulder-available-now.145773/
+    - text: tModLoader 是 Steam 上单独的免费应用，需要拥有泰拉瑞亚本体；原版玩家不能与 tModLoader 玩家联机。
+      sourceName: Steam 商店（tModLoader）
+      sourceUrl: https://store.steampowered.com/app/1281930/
+    - text: 旅行模式角色只能进入旅行模式世界，其他难度的角色也不能进入旅行模式世界。
+      sourceName: 泰拉瑞亚官方论坛（2020 年 5 月 1 日）
+      sourceUrl: https://forums.terraria.org/index.php?threads/with-great-power-comes-great-accessibility-introducing-terrarias-new-journey-mode.88233/
+  checkedAt: 2026-10-19
+  productNotes:
+    - 长期世界：几个人长期经营同一个世界。世界成员就是固定队成员，共用一个群聊。
+    - 目前只开放 Steam 版的找队与长期世界；手机版、主机版等其他平台暂未开放匹配。
+    - 找队时，原版和使用 tModLoader 模组的队伍不会混在一起；原版队伍还会核对游戏版本。
+  userChecks:
+    - 大家的游戏版本是否一致；用模组的话，tModLoader 与模组列表是否一致。
+    - 角色与世界的模式是否匹配：旅行模式角色只能进旅行模式世界。
+    - 开房方式与网络：谁开世界、通过 Steam 邀请还是 IP 加端口。
+
+faqs:
+  - id: mods
+    question: 原版和模组能放在同一队吗？
+    answer: |
+      不能。按 tModLoader 官方说明，原版玩家不能与 tModLoader 玩家联机；玉米圈找队时，原版队伍和使用 tModLoader 模组的队伍也不会互相匹配。用模组的队伍，请在说明里写清楚模组列表，加入的人装好同样的模组再进世界。
+  - id: progress
+    question: 装备和世界进度怎么约定？
+    answer: |
+      在队伍说明里写明世界处于什么阶段、打到了哪个 Boss，以及能不能带入其他世界的装备。想要"一起从零开荒"的，可以写明"新角色、新世界"，避免有人带着成品装备进来。
+  - id: platform
+    question: 手机、主机版能用玉米圈找泰拉瑞亚搭子吗？
+    answer: |
+      目前只开放 Steam 版的找队与长期世界，其他平台暂未开放匹配。按官方说明，PC 与手机版在版本一致时已经可以互相联机，主机的跨平台计划在 1.4.6 更新中推出；以官方最新说明为准。
+
+screen: campaign-new-terraria
+screenAlt: 玉米圈创建长期世界界面示意：为泰拉瑞亚世界设置名称、谁能看到和下一场时间
+demoParties: []
+
+related: [stardew-valley, monster-hunter, split-fiction]
+reviewedBy: 玉米圈产品团队
+updatedAt: 2026-10-19
+scope: 适用于在玉米圈为泰拉瑞亚找搭子；游戏内的联机方式、人数、跨平台与模组规则以游戏官方及 tModLoader 的说明为准。

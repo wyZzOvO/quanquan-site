@@ -1,0 +1,395 @@
+---
+/**
+ * 下载与获取（需求文档第 8 章、FR04、FR13）：全部渠道来自 releases.json；
+ * 只有 available 的渠道给"下载 / 前往商店"，其他状态写明说明与替代途径。设备识别只做标注，不自动跳转、不自动下载。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import QrCode from '../../components/QrCode.astro'
+import CopyButton from '../../components/CopyButton.astro'
+import FaqList from '../../components/FaqList.astro'
+import { content, siteEnv, visibleFaqs } from '../../lib/content.ts'
+import { staticPages } from '../../lib/pages.ts'
+import { absoluteUrl } from '../../lib/seo.ts'
+import { STATUS_LABELS, channelAction, formatBytes, platformSummaries } from '../../lib/downloads.ts'
+import { webEntryHref } from '../../lib/entries.ts'
+import { formatDateZh } from '../../lib/format.ts'
+
+const page = staticPages(content).download
+const { releases, company, product } = content
+const summaries = platformSummaries(releases)
+const web = webEntryHref(releases)
+const downloadUrl = absoluteUrl(siteEnv.siteUrl, '/download/')
+const faqs = visibleFaqs.filter((f) => ['download', 'web', 'age'].includes(f.id))
+const statusTone = { available: 'badge-success', beta: '', coming_soon: 'badge-muted', maintenance: 'badge-corn', unsupported: 'badge-muted' } as const
+---
+
+<BaseLayout
+  seo={{
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+    ogImage: page.ogImage,
+    ogImageAlt: page.ogImageAlt,
+    breadcrumbs: [{ name: page.name, path: page.path }],
+    dateModified: releases.updatedAt > page.updatedAt ? releases.updatedAt : page.updatedAt,
+    faqs,
+  }}
+>
+  <section class="intro">
+    <div class="container-text center">
+      <p class="eyebrow">下载</p>
+      <h1 class="headline-page">获取{product.name}</h1>
+      <p class="lede intro-lede">在这里查看 iPhone 和 Android 版的当前获取方式。请只从本页列出的官方渠道获取{product.name}。</p>
+      <p class="device-hint" data-device-hint hidden></p>
+      <div class="wechat-hint" data-wechat-hint hidden>
+        <p>在微信或 QQ 里可能无法直接下载。请点右上角"···"，选择"在浏览器打开"；也可以复制本页网址，到浏览器里打开。</p>
+        <CopyButton value={downloadUrl} label="复制网址" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight bg-alt">
+    <div class="container platforms">
+      {
+        summaries.map((s) => (
+          <article class="platform" data-platform={s.platform}>
+            <div class="platform-head">
+              <h2 class="headline-card">{s.label}</h2>
+              <span class:list={['badge', statusTone[s.status]]}>{STATUS_LABELS[s.status]}</span>
+              <span class="badge badge-corn suggested-badge" data-suggested-badge hidden>
+                你的设备
+              </span>
+            </div>
+            {s.channels.map((c) => {
+              const action = channelAction(c)
+              return (
+                <div class="channel">
+                  <h3 class="channel-name">{c.label}</h3>
+                  {action.label && action.href ? (
+                    <a class="btn btn-primary" href={action.href}>
+                      {action.label}
+                    </a>
+                  ) : null}
+                  {c.note ? <p class="text-2">{c.note}</p> : null}
+                  {c.betaScope ? <p class="text-2">测试范围：{c.betaScope}</p> : null}
+                  {c.version || c.releasedAt || c.requirement || c.apk ? (
+                    <dl class="specs">
+                      {c.version ? (
+                        <div>
+                          <dt>版本</dt>
+                          <dd>{c.version}</dd>
+                        </div>
+                      ) : null}
+                      {c.releasedAt ? (
+                        <div>
+                          <dt>发布日期</dt>
+                          <dd>{formatDateZh(c.releasedAt)}</dd>
+                        </div>
+                      ) : null}
+                      {c.requirement ? (
+                        <div>
+                          <dt>系统要求</dt>
+                          <dd>{c.requirement}</dd>
+                        </div>
+                      ) : null}
+                      {c.apk ? (
+                        <div>
+                          <dt>文件大小</dt>
+                          <dd>{formatBytes(c.apk.sizeBytes)}</dd>
+                        </div>
+                      ) : null}
+                      {c.apk ? (
+                        <div class="sha">
+                          <dt>SHA-256</dt>
+                          <dd>
+                            <code>{c.apk.sha256}</code>
+                          </dd>
+                        </div>
+                      ) : null}
+                    </dl>
+                  ) : null}
+                </div>
+              )
+            })}
+            {s.status !== 'available' && web ? (
+              <p class="fallback">
+                现在可以先使用<a href={web}>网页版</a>，和 App 是同一个账号。
+              </p>
+            ) : null}
+          </article>
+        ))
+      }
+
+      <article class="platform" data-platform="web">
+        <div class="platform-head">
+          <h2 class="headline-card">网页版</h2>
+          <span class:list={['badge', releases.web.enabled ? 'badge-success' : 'badge-muted']}>
+            {releases.web.enabled ? '已开放' : '暂未开放'}
+          </span>
+        </div>
+        <div class="channel">
+          <p class="text-2">{releases.web.enabled ? releases.web.note : '网页版暂未开放，开放后会在这里提供入口。'}</p>
+          {
+            web ? (
+              <a class="btn btn-primary" href={web}>
+                进入网页版
+              </a>
+            ) : null
+          }
+          {web ? <p class="text-2 small">适用于电脑和手机浏览器，用手机号和验证码登录。</p> : null}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-tight qr-section">
+    <div class="container qr-wrap">
+      <QrCode value={downloadUrl} label="本页网址的二维码" size={148} />
+      <div>
+        <h2 class="headline-small">在手机上打开本页</h2>
+        <p class="text-2">用手机相机扫描二维码，或在手机浏览器里输入下面的网址。</p>
+        <p class="url"><code>{downloadUrl}</code></p>
+        <CopyButton value={downloadUrl} label="复制网址" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-alt">
+    <div class="container-text">
+      <h2 class="headline-section">核对下载来源</h2>
+      <dl class="facts">
+        <div>
+          <dt>产品名称</dt>
+          <dd>{product.name}</dd>
+        </div>
+        <div>
+          <dt>运营者</dt>
+          <dd>
+            {
+              company.operator.effective ? (
+                company.legalName
+              ) : (
+                <>
+                  以<a href="/legal/user-agreement.html">《用户服务协议》</a>和<a href="/legal/privacy-policy.html">《隐私政策》</a>载明的为准
+                </>
+              )
+            }
+          </dd>
+        </div>
+        <div>
+          <dt>官方网站</dt>
+          <dd>{siteEnv.siteUrl.replace(/^https?:\/\//, '')}</dd>
+        </div>
+        <div>
+          <dt>发布信息更新</dt>
+          <dd><time datetime={releases.updatedAt}>{formatDateZh(releases.updatedAt)}</time></dd>
+        </div>
+      </dl>
+      <ul class="tips">
+        <li>请只从本页列出的应用商店或官方地址获取{product.name}；官方安装包会在本页公布版本、大小和 SHA-256 校验值。</li>
+        <li>我们不会通过私信、群聊或其他网站发送安装包，也不会向你索要验证码或密码。</li>
+        <li>{product.name}面向年满 {product.minAge} 周岁的用户。</li>
+      </ul>
+      <div class="faq-wrap">
+        <FaqList items={faqs} idPrefix="faq" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import '../../scripts/download.ts'
+</script>
+
+<style>
+  .intro {
+    padding: 56px 0 40px;
+  }
+
+  @media (min-width: 734px) {
+    .intro {
+      padding: 88px 0 56px;
+    }
+  }
+
+  .intro-lede {
+    margin-top: 18px;
+  }
+
+  .device-hint {
+    margin-top: 18px;
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+
+  .wechat-hint {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 16px 18px;
+    border-radius: var(--radius-small);
+    background: #fff7d6;
+    color: #4d3d00;
+    text-align: left;
+  }
+
+  .wechat-hint[hidden],
+  .device-hint[hidden] {
+    display: none;
+  }
+
+  .platforms {
+    display: grid;
+    gap: 20px;
+  }
+
+  @media (min-width: 900px) {
+    .platforms {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+    }
+  }
+
+  .platform {
+    padding: 28px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-card);
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .platform.suggested {
+    border-color: var(--accent);
+  }
+
+  .platform-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 16px;
+  }
+
+  .platform-head h2 {
+    margin-right: auto;
+  }
+
+  .suggested-badge[hidden] {
+    display: none;
+  }
+
+  .channel {
+    display: grid;
+    justify-items: start;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .channel + .channel {
+    margin-top: 16px;
+  }
+
+  .channel-name {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .specs {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .specs div {
+    display: flex;
+    gap: 12px;
+  }
+
+  .specs dt {
+    flex: 0 0 5em;
+    color: var(--text-2);
+  }
+
+  .specs .sha {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .specs code {
+    font-family: var(--mono);
+    font-size: 12px;
+    word-break: break-all;
+  }
+
+  .fallback {
+    margin-top: 16px;
+    color: var(--text-2);
+    font-size: 15px;
+  }
+
+  .qr-section {
+    display: none;
+  }
+
+  @media (min-width: 1024px) and (hover: hover) {
+    .qr-section {
+      display: block;
+    }
+  }
+
+  .qr-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .qr-wrap :global(.qr) {
+    flex: 0 0 auto;
+    border: 1px solid var(--line-soft);
+  }
+
+  .url {
+    margin: 10px 0;
+  }
+
+  .url code {
+    font-family: var(--mono);
+    font-size: 15px;
+  }
+
+  .facts {
+    display: grid;
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .facts div {
+    display: grid;
+    grid-template-columns: 7em 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .facts dt {
+    color: var(--text-2);
+  }
+
+  .tips {
+    display: grid;
+    gap: 8px;
+    margin-top: 24px;
+    padding-left: 1.2em;
+    color: var(--text-2);
+  }
+
+  .faq-wrap {
+    margin-top: 40px;
+  }
+</style>

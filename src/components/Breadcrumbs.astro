@@ -1,0 +1,65 @@
+---
+/** 可见的面包屑，与 BreadcrumbList 结构化数据使用同一份数据 */
+import type { Crumb } from '../lib/seo.ts'
+
+interface Props {
+  items: readonly Crumb[]
+}
+
+const { items } = Astro.props
+const all: Crumb[] = [{ name: '首页', path: '/' }, ...items]
+---
+
+<nav class="crumbs container-wide" aria-label="面包屑">
+  <ol>
+    {
+      all.map((c, i) => (
+        <li>
+          {i === all.length - 1 ? (
+            <span aria-current="page">{c.name}</span>
+          ) : (
+            <a href={c.path}>{c.name}</a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs {
+    padding-top: 14px;
+    font-size: 13px;
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-2);
+  }
+
+  li + li::before {
+    content: '›';
+    margin: 0 8px;
+    color: var(--text-2);
+  }
+
+  a {
+    color: var(--text-2);
+  }
+
+  a:hover {
+    color: var(--text);
+  }
+
+  [aria-current='page'] {
+    color: var(--text);
+  }
+</style>

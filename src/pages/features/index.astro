@@ -1,0 +1,384 @@
+---
+/**
+ * 功能总览（需求文档 FR10）：看队伍、找搭子、语音开黑、继续约玩。每个主题一句用途、一张界面、最多三项能力和入口；
+ * 能力按 product.yaml 的开关显示，规划中的能力不出现。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Phone from '../../components/Phone.astro'
+import CtaGroup from '../../components/CtaGroup.astro'
+import VoiceRoom from '../../components/VoiceRoom.astro'
+import { content } from '../../lib/content.ts'
+import { gamePath, staticPages } from '../../lib/pages.ts'
+import { webEntryHref } from '../../lib/entries.ts'
+
+const page = staticPages(content).features
+const { product, publishedGames, releases } = content
+const cap = product.capabilities
+const web = webEntryHref(releases)
+// 中文与英文之间留空格："在 App 或网页版里"
+const where = releases.web.enabled ? ' App 或网页版' : ' App '
+const stardew = publishedGames.find((g) => g.slug === 'stardew-valley')
+const terraria = publishedGames.find((g) => g.slug === 'terraria')
+
+const topics = [
+  cap.teamList ? { id: 'teams', label: '看队伍' } : null,
+  cap.companions ? { id: 'companions', label: '找搭子' } : null,
+  cap.teamVoice ? { id: 'voice', label: '语音开黑' } : null,
+  cap.squads || cap.nextPlans || cap.campaigns ? { id: 'continue', label: '继续约玩' } : null,
+].filter((t): t is { id: string; label: string } => t !== null)
+---
+
+<BaseLayout
+  seo={{
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+    ogImage: page.ogImage,
+    ogImageAlt: page.ogImageAlt,
+    breadcrumbs: [{ name: page.name, path: page.path }],
+    dateModified: page.updatedAt,
+  }}
+>
+  <section class="intro">
+    <div class="container-text center">
+      <p class="eyebrow">功能</p>
+      <h1 class="headline-page">从找到人，到一起开黑</h1>
+      <p class="lede intro-lede">
+        在玉米圈，你可以先选想玩的游戏，再查看队伍和玩家的游玩条件。确定时间与约定后，在{where}里完成沟通和组队。队伍语音供成员开黑交流使用。
+      </p>
+      <nav class="topics" aria-label="本页主题">
+        <ul>
+          {
+            topics.map((t) => (
+              <li>
+                <a href={`#${t.id}`}>{t.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {
+    cap.teamList ? (
+      <section class="section bg-alt" id="teams">
+        <div class="container feature">
+          <div class="feature-copy" data-reveal>
+            <p class="eyebrow">看队伍</p>
+            <h2 class="headline-section">一眼看清，这一局适不适合你</h2>
+            <p class="lede">按游戏查看正在招人和即将开始的队伍，平台、时间、空位和语音习惯都写在卡片上。</p>
+            <ul class="caps">
+              <li>
+                <strong>按游戏找队</strong>
+                <span>切换游戏就能看到对应的队伍，正在进行、可以补位的队伍也会标出来。</span>
+              </li>
+              <li>
+                <strong>先看合不合适</strong>
+                <span>平台能否一起玩、信息是否填全、离开始还有多久，加入之前心里有数。</span>
+              </li>
+              <li>
+                <strong>自己发车</strong>
+                <span>没有合适的队伍，就写好时间和要求自己发车，等人来申请。</span>
+              </li>
+            </ul>
+            {
+              web ? (
+                <a class="link-more" href={web}>
+                  在网页版看队伍 <span class="chev" aria-hidden="true">›</span>
+                </a>
+              ) : null
+            }
+          </div>
+          <div class="feature-visual" data-reveal="1">
+            <Phone screen="team-list" alt="玉米圈找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由" size="lg" />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    cap.companions ? (
+      <section class="section" id="companions">
+        <div class="container feature feature-reverse">
+          <div class="feature-copy" data-reveal>
+            <p class="eyebrow">找搭子</p>
+            <h2 class="headline-section">按游戏需求和游玩习惯找人</h2>
+            <p class="lede">填好游戏名片，写下想玩什么，玉米圈帮你找到节奏合拍的人和队伍，并告诉你为什么推荐。</p>
+            <ul class="caps">
+              <li>
+                <strong>游戏名片</strong>
+                <span>记下平台、等级或进度和语音习惯，找人、组队时不用反复介绍自己。</span>
+              </li>
+              {cap.findAssistant ? (
+                <li>
+                  <strong>帮我找队</strong>
+                  <span>写下平台、目标和时间等条件，有合适的队伍时提醒你。</span>
+                </li>
+              ) : null}
+              <li>
+                <strong>推荐理由</strong>
+                <span>目标一致、马上能开、同平台……每条推荐都写明为什么适合你。</span>
+              </li>
+            </ul>
+          </div>
+          <div class="feature-visual pair" data-reveal="1">
+            <Phone screen="game-card" alt="玉米圈游戏名片界面示意：填写游戏平台、等级和语音习惯" size="md" class="pair-back" />
+            <Phone screen="find" alt='玉米圈"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件' size="md" class="pair-front" />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    cap.teamVoice ? (
+      <section class="section bg-dark" id="voice">
+        <div class="container feature">
+          <div class="feature-copy" data-reveal>
+            <p class="eyebrow">语音开黑</p>
+            <h2 class="headline-section">约好以后，一起开麦</h2>
+            <p class="lede">加入队伍后，在{where}里一键进入队伍语音。开不开麦由你决定，谁在说话一目了然。</p>
+            <ul class="caps">
+              {cap.webVoice ? (
+                <li>
+                  <strong>App 与网页版互通</strong>
+                  <span>同一个账号、同一个队伍、同一个语音房，打游戏时用电脑也能进语音。</span>
+                </li>
+              ) : null}
+              <li>
+                <strong>需要时才用麦克风</strong>
+                <span>
+                  只听不说也可以；开麦说话时才会用到麦克风，详见<a href="/legal/permission-list.html">《设备权限调用说明》</a>。
+                </span>
+              </li>
+              <li>
+                <strong>不录音、不保存</strong>
+                <span>语音实时传输，玉米圈不录制、不保存语音内容。</span>
+              </li>
+            </ul>
+            <p class="note small">队伍语音供成员开黑交流使用，不改变游戏本身的联机与语音功能。</p>
+          </div>
+          <div class="feature-visual" data-reveal="1">
+            <VoiceRoom />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    cap.squads || cap.nextPlans || cap.campaigns ? (
+      <section class="section bg-alt" id="continue">
+        <div class="container feature feature-reverse">
+          <div class="feature-copy" data-reveal>
+            <p class="eyebrow">继续约玩</p>
+            <h2 class="headline-section">玩得开心，下次还一起</h2>
+            <p class="lede">一局结束不是终点。和合拍的人组成固定队，约好下一场，或者一起经营一个长期存档。</p>
+            <ul class="caps">
+              {cap.squads ? (
+                <li>
+                  <strong>固定队</strong>
+                  <span>把一起玩得开心的人留下来，有自己的群聊和语音，想玩时直接叫上大家。</span>
+                </li>
+              ) : null}
+              {cap.nextPlans ? (
+                <li>
+                  <strong>约下一场</strong>
+                  <span>给出几个时间让大家选，定好了再开；固定队也可以设成每周固定时间。</span>
+                </li>
+              ) : null}
+              {cap.campaigns ? (
+                <li>
+                  <strong>长期档</strong>
+                  <span>
+                    {stardew ? <a href={gamePath(stardew)}>星露谷物语</a> : '星露谷物语'}的长期农场、
+                    {terraria ? <a href={gamePath(terraria)}>泰拉瑞亚</a> : '泰拉瑞亚'}的长期世界，几个人长期经营同一个存档。
+                  </span>
+                </li>
+              ) : null}
+            </ul>
+          </div>
+          <div class="feature-visual" data-reveal="1">
+            <Phone screen="squads" alt="玉米圈固定队界面示意：固定队的成员人数、常玩时间和进语音入口" size="lg" />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  <section class="section">
+    <div class="container center">
+      <h2 class="headline-section" data-reveal>为你的游戏找个搭子</h2>
+      <ul class="game-links" data-reveal="1">
+        {
+          publishedGames.map((g) => (
+            <li>
+              <a href={gamePath(g)}>{g.displayName}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <CtaGroup align="center" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: 56px 0 48px;
+  }
+
+  @media (min-width: 734px) {
+    .intro {
+      padding: 88px 0 64px;
+    }
+  }
+
+  .intro-lede {
+    margin-top: 18px;
+  }
+
+  .topics ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .topics a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 6px 18px;
+    border-radius: 999px;
+    background: var(--bg-alt);
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .topics a:hover {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+
+  .feature {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 72px;
+    }
+
+    .feature-reverse .feature-copy {
+      order: 2;
+    }
+  }
+
+  .feature-copy .lede {
+    margin-top: 16px;
+  }
+
+  .caps {
+    display: grid;
+    gap: 18px;
+    margin: 28px 0 12px;
+    list-style: none;
+  }
+
+  .caps strong {
+    display: block;
+    font-size: 19px;
+  }
+
+  .caps span {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-2);
+  }
+
+  .bg-dark .caps span {
+    color: var(--text-on-dark-2);
+  }
+
+  .note {
+    margin-top: 16px;
+    color: var(--text-on-dark-2);
+  }
+
+  .feature-visual {
+    display: grid;
+    justify-items: center;
+  }
+
+  .pair {
+    grid-template-columns: auto auto;
+    align-items: end;
+    justify-content: center;
+  }
+
+  .pair :global(.pair-back) {
+    margin-right: -40px;
+    transform: translateY(-24px) rotate(-3deg);
+  }
+
+  .pair :global(.pair-front) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pair .illustration-note {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 520px) {
+    .pair {
+      grid-template-columns: auto;
+    }
+
+    .pair :global(.pair-back) {
+      display: none;
+    }
+  }
+
+  .game-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0 36px;
+    list-style: none;
+  }
+
+  .game-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    background: var(--bg-alt);
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .game-links a:hover {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+</style>

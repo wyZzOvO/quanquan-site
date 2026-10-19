@@ -1,0 +1,583 @@
+---
+/**
+ * 游戏专题（需求文档第 7 章、FR12）：H1、引导说明、适用场景、关键约定、三步说明、兼容性提示、FAQ 与操作入口；
+ * 审核者、实质更新日期与适用范围写在页面上。游戏官方规则与玉米圈当前功能分开说明。
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import GameArt from '../../../components/GameArt.astro'
+import GameCard from '../../../components/GameCard.astro'
+import CtaGroup from '../../../components/CtaGroup.astro'
+import Phone from '../../../components/Phone.astro'
+import PartyCardDemo from '../../../components/PartyCardDemo.astro'
+import FaqList from '../../../components/FaqList.astro'
+import { content, gameCodeWhitelist } from '../../../lib/content.ts'
+import { gameOgImage, gamePath, staticPages } from '../../../lib/pages.ts'
+import { webGameHref } from '../../../lib/entries.ts'
+import { formatDateZh } from '../../../lib/format.ts'
+import { withBreaks } from '../../../lib/links.ts'
+import type { GamePage } from '../../../lib/schema.ts'
+
+export function getStaticPaths() {
+  return content.publishedGames.map((game) => ({ params: { slug: game.slug }, props: { game } }))
+}
+
+interface Props {
+  game: GamePage
+}
+
+const { game } = Astro.props
+const { releases, publishedGames } = content
+const gamesPage = staticPages(content).games
+const openTitles = game.titles.filter((t) => t.supportStatus === 'open')
+const primaryTitle = openTitles[0]!
+const webHref = webGameHref(releases, primaryTitle.code, gameCodeWhitelist)
+const related = game.related.map((slug) => publishedGames.find((g) => g.slug === slug)).filter((g): g is GamePage => !!g)
+const multiTitle = game.titles.length > 1
+---
+
+<BaseLayout
+  seo={{
+    path: gamePath(game),
+    title: game.seo.title,
+    description: game.seo.description,
+    keywords: game.seo.keywords,
+    ogImage: gameOgImage(game),
+    ogImageAlt: `${game.displayName}：${game.card.tagline}`,
+    breadcrumbs: [
+      { name: gamesPage.name, path: gamesPage.path },
+      { name: game.displayName, path: gamePath(game) },
+    ],
+    dateModified: game.updatedAt,
+    videoGames: openTitles.map((t) => ({ name: t.name, alternateName: t.englishName, sameAs: t.officialSite })),
+    faqs: game.faqs,
+  }}
+>
+  <article>
+    <header class="game-hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow">{game.displayName} · {game.englishName}</p>
+          <h1 class="headline-page" set:html={withBreaks(game.h1)} />
+          <p class="lede hero-lede">{game.lead}</p>
+          <CtaGroup webHref={webHref} webLabel={`在网页版找${primaryTitle.name}队伍`} />
+          <p class="meta">
+            <span>内容审核：{game.reviewedBy}</span>
+            <span>更新于 <time datetime={game.updatedAt}>{formatDateZh(game.updatedAt)}</time></span>
+          </p>
+          <p class="scope">{game.scope}</p>
+        </div>
+        <div class="hero-art">
+          <GameArt variant={game.art} uid="hero" />
+        </div>
+      </div>
+    </header>
+
+    <section class="section bg-alt" aria-labelledby="scenes-title">
+      <div class="container">
+        <h2 class="headline-section center" id="scenes-title" data-reveal>适合这些场景</h2>
+        <ul class="scenes">
+          {
+            game.scenes.map((s, i) => (
+              <li data-reveal={String(i + 1)}>
+                <h3 class="headline-small">{s.title}</h3>
+                <p class="text-2">{s.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="agreements-title">
+      <div class="container split">
+        <div data-reveal>
+          <h2 class="headline-section" id="agreements-title">组队前，先说好这些</h2>
+          <p class="lede agreements-intro">{game.agreements.intro}</p>
+          <ol class="agreements">
+            {
+              game.agreements.items.map((a) => (
+                <li>
+                  <strong>{a.title}</strong>
+                  <span>{a.text}</span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        <div class="visual" data-reveal="1">
+          {
+            game.screen && game.screenAlt ? (
+              <Phone screen={game.screen} alt={game.screenAlt} size="lg" />
+            ) : game.demoParties.length ? (
+              <div class="demo">
+                {game.demoParties.map((d) => (
+                  <PartyCardDemo {...d} />
+                ))}
+              </div>
+            ) : null
+          }
+          <p class="illustration-note">界面示意，展示内容为演示数据</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-alt" aria-labelledby="steps-title">
+      <div class="container">
+        <h2 class="headline-section center" id="steps-title" data-reveal>在玉米圈，三步开始</h2>
+        <ol class="steps">
+          {
+            game.steps.map((s, i) => (
+              <li data-reveal={String(i + 1)}>
+                <span class="num" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <h3 class="headline-small">{s.title}</h3>
+                <p class="text-2">{s.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="compat-title" id="compatibility">
+      <div class="container">
+        <div class="center compat-head" data-reveal>
+          <h2 class="headline-section" id="compat-title">联机条件</h2>
+          <p class="lede">
+            游戏本身的联机规则，和玉米圈当前开放的找队能力，是两件事。下面分开说明，组队前请再和队友确认一次。
+          </p>
+        </div>
+
+        <div class="compat-grid">
+          <div class="compat-card" data-reveal="1">
+            <h3 class="headline-card">玉米圈当前开放</h3>
+            <p class="scroll-hint small text-2" id={`table-hint-${game.slug}`}>表格较宽时可以左右滑动查看。</p>
+            <div
+              class="table-scroll"
+              role="region"
+              aria-label={`${game.displayName}各作品在玉米圈的开放情况`}
+              aria-describedby={`table-hint-${game.slug}`}
+              tabindex="0"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">{multiTitle ? '作品' : '游戏'}</th>
+                    <th scope="col">状态</th>
+                    <th scope="col">开放平台</th>
+                    <th scope="col">说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    game.titles.map((t) => {
+                      const href = t.supportStatus === 'open' ? webGameHref(releases, t.code, gameCodeWhitelist) : null
+                      return (
+                        <tr>
+                          <th scope="row">{t.name}</th>
+                          <td>
+                            {t.supportStatus === 'open' ? (
+                              <span class="badge badge-success">已开放</span>
+                            ) : (
+                              <span class="badge badge-muted">暂未开放</span>
+                            )}
+                          </td>
+                          <td>{t.openPlatforms.length ? t.openPlatforms.join('、') : '—'}</td>
+                          <td>
+                            {t.platformNote}
+                            {href ? (
+                              <>
+                                {' '}
+                                <a href={href}>在网页版找队</a>
+                              </>
+                            ) : null}
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullets">
+              {game.compatibility.productNotes.map((n) => <li>{n}</li>)}
+            </ul>
+          </div>
+
+          <div class="compat-card" data-reveal="2">
+            <h3 class="headline-card">游戏官方规则</h3>
+            <p class="text-2 small">
+              以下摘自游戏或平台官方公开资料，核对于 <time datetime={game.compatibility.checkedAt}>{formatDateZh(game.compatibility.checkedAt)}</time>，以官方最新说明为准。
+            </p>
+            {
+              game.compatibility.officialFacts.length ? (
+                <ul class="facts">
+                  {game.compatibility.officialFacts.map((f) => (
+                    <li>
+                      <span>{f.text}</span>
+                      <a class="source" href={f.sourceUrl}>
+                        来源：{f.sourceName}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="facts-empty">
+                  具体的联机人数、跨平台与版本规则，请查看
+                  <a href={primaryTitle.officialSite}>{primaryTitle.name}官方网站</a>。
+                </p>
+              )
+            }
+          </div>
+
+          <div class="compat-card" data-reveal="3">
+            <h3 class="headline-card">组队前请确认</h3>
+            <ul class="checks">
+              {game.compatibility.userChecks.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-alt" aria-labelledby="faq-title">
+      <div class="container-text">
+        <h2 class="headline-section" id="faq-title" data-reveal>常见问题</h2>
+        <div class="faq-wrap">
+          <FaqList items={game.faqs} idPrefix={`faq-${game.slug}`} />
+        </div>
+      </div>
+    </section>
+
+    {
+      related.length ? (
+        <section class="section" aria-labelledby="related-title">
+          <div class="container">
+            <h2 class="headline-section center" id="related-title" data-reveal>
+              也在玉米圈找搭子
+            </h2>
+            <div class="related">
+              {related.map((g) => (
+                <GameCard game={g} size="small" />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null
+    }
+
+    <section class="section-tight bg-alt">
+      <div class="container center">
+        <h2 class="headline-card cta-title">找到合拍的{game.displayName}搭子</h2>
+        <CtaGroup webHref={webHref} webLabel={`在网页版找${primaryTitle.name}队伍`} align="center" />
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .game-hero {
+    padding: 24px 0 64px;
+  }
+
+  @media (min-width: 734px) {
+    .game-hero {
+      padding: 40px 0 88px;
+    }
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: 36px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 56px;
+    }
+  }
+
+  .hero-lede {
+    margin: 18px 0 28px;
+  }
+
+  .hero-art {
+    overflow: hidden;
+    aspect-ratio: 16 / 11;
+    border-radius: var(--radius-card);
+    background: var(--bg-alt);
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (min-width: 900px) {
+    .hero-art {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-top: 28px;
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  .scope {
+    max-width: 36em;
+    margin-top: 6px;
+    color: var(--text-2);
+    font-size: 13px;
+  }
+
+  .scenes {
+    display: grid;
+    gap: 16px;
+    margin-top: 40px;
+    list-style: none;
+  }
+
+  @media (min-width: 734px) {
+    .scenes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+
+  .scenes li {
+    padding: 28px;
+    border-radius: var(--radius-card);
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .scenes h3 {
+    margin-bottom: 6px;
+  }
+
+  .split {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 64px;
+    }
+  }
+
+  .agreements-intro {
+    margin-top: 16px;
+  }
+
+  .agreements {
+    display: grid;
+    gap: 16px;
+    margin-top: 28px;
+    padding: 0;
+    list-style: none;
+    counter-reset: agree;
+  }
+
+  .agreements li {
+    position: relative;
+    padding-left: 44px;
+    counter-increment: agree;
+  }
+
+  .agreements li::before {
+    content: counter(agree);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .agreements strong {
+    display: block;
+    font-size: 18px;
+  }
+
+  .agreements span {
+    color: var(--text-2);
+  }
+
+  .visual {
+    display: grid;
+    justify-items: center;
+  }
+
+  .demo {
+    display: grid;
+    gap: 16px;
+    width: min(100%, 440px);
+  }
+
+  .demo :global(.party:nth-child(2)) {
+    margin-left: 28px;
+    margin-right: -12px;
+  }
+
+  @media (max-width: 480px) {
+    .demo :global(.party:nth-child(2)) {
+      margin-left: 12px;
+      margin-right: 0;
+    }
+  }
+
+  .steps {
+    display: grid;
+    gap: 16px;
+    margin-top: 40px;
+    list-style: none;
+  }
+
+  @media (min-width: 734px) {
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+
+  .steps li {
+    padding: 28px 26px;
+    border-radius: var(--radius-card);
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .num {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--text);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .steps h3 {
+    margin-bottom: 6px;
+  }
+
+  .compat-head .lede {
+    max-width: 34em;
+    margin: 16px auto 0;
+  }
+
+  .compat-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  @media (min-width: 900px) {
+    .compat-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 第一张（玉米圈当前开放，含表格）占满一行，下面两张并排 */
+    .compat-grid .compat-card:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .compat-card {
+    padding: 28px;
+    border-radius: var(--radius-card);
+    background: var(--bg-alt);
+  }
+
+  .compat-card h3 {
+    margin-bottom: 14px;
+  }
+
+  .table-scroll {
+    margin: 0 -8px;
+    padding: 0 8px;
+  }
+
+  .scroll-hint {
+    margin-bottom: 4px;
+  }
+
+  @media (min-width: 734px) {
+    .scroll-hint {
+      display: none;
+    }
+  }
+
+  .table-scroll:focus-visible {
+    outline-offset: 0;
+  }
+
+  td a {
+    white-space: nowrap;
+  }
+
+  .bullets,
+  .checks,
+  .facts {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+    padding-left: 1.2em;
+  }
+
+  .facts {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .facts li {
+    display: grid;
+    gap: 2px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .source {
+    font-size: 13px;
+  }
+
+  .facts-empty {
+    margin-top: 12px;
+  }
+
+  .faq-wrap {
+    margin-top: 32px;
+  }
+
+  .related {
+    display: grid;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  @media (min-width: 734px) {
+    .related {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .cta-title {
+    margin-bottom: 20px;
+  }
+</style>

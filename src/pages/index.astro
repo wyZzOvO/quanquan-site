@@ -1,0 +1,530 @@
+---
+/**
+ * 产品首页（需求文档第 5 章）：是什么 → 能做什么 → 适合哪些游戏 → 怎样开始 → 谁在运营。
+ */
+import { Image } from 'astro:assets'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Phone from '../components/Phone.astro'
+import CtaGroup from '../components/CtaGroup.astro'
+import GameCard from '../components/GameCard.astro'
+import VoiceRoom from '../components/VoiceRoom.astro'
+import PartyCardDemo from '../components/PartyCardDemo.astro'
+import mark from '../assets/brand/mark.png'
+import { content } from '../lib/content.ts'
+import { staticPages } from '../lib/pages.ts'
+
+const page = staticPages(content).home
+const { product, company, publishedGames } = content
+const cap = product.capabilities
+const primaryGames = publishedGames.filter((g) => g.tier === 'primary')
+const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
+---
+
+<BaseLayout
+  seo={{
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+    ogImage: page.ogImage,
+    ogImageAlt: page.ogImageAlt,
+    breadcrumbs: [],
+    dateModified: page.updatedAt,
+  }}
+>
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="container center hero-copy">
+      <p class="product-name">
+        <Image src={mark} alt="" width={15} height={26} densities={[2, 3]} loading="eager" class="product-mark" />
+        {product.name}
+      </p>
+      <h1 class="headline-hero">找到同频的游戏搭子</h1>
+      <p class="lede hero-lede keep-lines">{product.shortDescription}</p>
+      <CtaGroup align="center" />
+    </div>
+    <div class="hero-visual">
+      <Phone screen="party-detail" alt="玉米圈队伍页界面示意：平台、开始时间、人数与语音习惯" size="md" class="hero-side hero-left" />
+      <Phone
+        screen="team-list"
+        alt="玉米圈找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由"
+        size="lg"
+        priority
+        class="hero-center"
+      />
+      <Phone screen="game-card" alt="玉米圈游戏名片界面示意：填写平台、等级和语音习惯" size="md" class="hero-side hero-right" />
+    </div>
+    <p class="illustration-note">界面示意，展示内容为演示数据</p>
+  </section>
+
+  {
+    cap.teamList ? (
+      <section class="section bg-alt" id="teams">
+        <div class="container split">
+          <div class="split-copy" data-reveal>
+            <p class="eyebrow">找队列表</p>
+            <h2 class="headline-section">想玩的这一局，先找到合适的人</h2>
+            <p class="lede">先选游戏，再看正在招人的队伍。平台、开始时间、还差几人、开不开麦，一张卡片就能看清。</p>
+            <ul class="points">
+              <li>按游戏查看正在招人和即将开始的队伍</li>
+              <li>标出平台能否一起玩、信息是否填全</li>
+              <li>没有合适的队伍，可以自己发车</li>
+            </ul>
+            <a class="link-more" href="/features/#teams">
+              查看找队方式 <span class="chev" aria-hidden="true">›</span>
+            </a>
+          </div>
+          <div class="split-visual stack" data-reveal="1">
+            <PartyCardDemo
+              initial="怪"
+              title="今晚 20:30 黑蚀龙｜PS5｜欢迎新手"
+              meta="怪物猎人 荒野 · PS5 · 开麦"
+              tags={[
+                { text: '可跨平台', tone: 'violet' },
+                { text: '2/4 · 还能上 2 人', tone: 'green' },
+                { text: '40 分钟后' },
+              ]}
+              host="猎人老王"
+              action="加入"
+              reason="目标一致 · 马上开"
+            />
+            <PartyCardDemo
+              initial="星"
+              title="周五晚上种地｜PC｜慢慢玩"
+              meta="星露谷物语 · PC · 只听也行"
+              tags={[{ text: '同平台', tone: 'green' }, { text: '1/4 · 还差 1 人成行', tone: 'amber' }, { text: '周五 21:00' }]}
+              host="咕咕"
+              action="申请加入"
+            />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    cap.companions ? (
+      <section class="section" id="companions">
+        <div class="container split split-reverse">
+          <div class="split-copy" data-reveal>
+            <p class="eyebrow">找搭子</p>
+            <h2 class="headline-section">聊得来，也玩得到一起</h2>
+            <p class="lede">
+              说说你玩什么、在哪个平台、什么时候有空、习惯开麦还是只听。玉米圈按游戏需求和游玩习惯，帮你找到合适的人和队伍。
+            </p>
+            <ul class="points">
+              <li>游戏名片记下平台、进度和语音习惯，组队时不用反复介绍</li>
+              {cap.findAssistant ? <li>"帮我找队"写下条件，有合适的队伍会提醒你</li> : null}
+              <li>每条推荐都写明理由：目标一致、马上能开、同平台</li>
+            </ul>
+            <a class="link-more" href="/features/#companions">
+              查看功能 <span class="chev" aria-hidden="true">›</span>
+            </a>
+          </div>
+          <div class="split-visual" data-reveal="1">
+            <Phone screen="find" alt='玉米圈"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件' size="lg" />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    cap.teamVoice ? (
+      <section class="section bg-dark voice" id="voice">
+        <div class="container center">
+          <div class="voice-copy" data-reveal>
+            <p class="eyebrow">语音开黑</p>
+            <h2 class="headline-section">约好以后，一起开麦</h2>
+            <p class="lede">
+              加入队伍后，在 App{cap.webVoice ? ' 或网页版' : ''}里一键进入队伍语音，开不开麦由你决定，谁在说话一目了然。
+            </p>
+          </div>
+          <div class="voice-visual">
+            <VoiceRoom />
+            <p class="illustration-note">界面示意，展示内容为演示数据</p>
+          </div>
+          <ul class="voice-points" data-reveal="1">
+            {cap.webVoice ? (
+              <li>
+                <strong>App 与网页版互通</strong>
+                <span>同一个账号、同一个队伍、同一个语音房，用手机或电脑都能进。</span>
+              </li>
+            ) : null}
+            {cap.squads ? (
+              <li>
+                <strong>固定队随时开语音</strong>
+                <span>玩得合拍的人组成固定队，下次不用再约，进语音就能聚。</span>
+              </li>
+            ) : null}
+            <li>
+              <strong>不录音、不保存</strong>
+              <span>语音实时传输，玉米圈不录制、不保存语音内容。</span>
+            </li>
+          </ul>
+          <a class="link-more" href="/features/#voice">
+            查看使用方式 <span class="chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </section>
+    ) : null
+  }
+
+  <!-- 游戏场景 -->
+  <section class="section bg-alt" id="games">
+    <div class="container">
+      <div class="center section-head" data-reveal>
+        <p class="eyebrow">游戏场景</p>
+        <h2 class="headline-section">从这几款游戏开始</h2>
+        <p class="lede">双人同行、长期农场、开荒建世界、分作品找猎友。每款游戏，都有不同的找搭子方式。</p>
+      </div>
+      <div class="games-primary">
+        {primaryGames.map((g) => <GameCard game={g} size="large" />)}
+      </div>
+      <div class="games-secondary">
+        {secondaryGames.map((g) => <GameCard game={g} size="small" />)}
+      </div>
+      <div class="center more">
+        <a class="link-more" href="/games/">
+          查看全部游戏 <span class="chev" aria-hidden="true">›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 开始使用 -->
+  <section class="section" id="start">
+    <div class="container">
+      <div class="center section-head" data-reveal>
+        <p class="eyebrow">开始使用</p>
+        <h2 class="headline-section">三步，开始一起玩</h2>
+      </div>
+      <ol class="steps">
+        <li data-reveal="1">
+          <span class="num" aria-hidden="true">1</span>
+          <h3 class="headline-small">查看游戏</h3>
+          <p class="text-2">选你正在玩的游戏，看看现在有哪些队伍和玩家。</p>
+        </li>
+        <li data-reveal="2">
+          <span class="num" aria-hidden="true">2</span>
+          <h3 class="headline-small">选择搭子或队伍</h3>
+          <p class="text-2">看清平台、时间和约定，申请加入，或者自己发车。</p>
+        </li>
+        <li data-reveal="3">
+          <span class="num" aria-hidden="true">3</span>
+          <h3 class="headline-small">确认并开黑</h3>
+          <p class="text-2">在 App{content.releases.web.enabled ? ' 或网页版' : ''}里确认时间，进入队伍语音一起开黑。</p>
+        </li>
+      </ol>
+      <CtaGroup align="center" />
+    </div>
+  </section>
+
+  <!-- 公司与支持 -->
+  <section class="section-tight bg-alt company">
+    <div class="container center" data-reveal>
+      <p class="company-line">
+        {company.operator.effective ? `玉米圈由${company.legalName}运营。` : company.relation}
+      </p>
+      <ul class="company-links">
+        <li><a href="/about/">关于半亩晴空</a></li>
+        <li><a href="/support/">帮助与支持</a></li>
+        <li><a href="/legal/privacy-policy.html">隐私政策</a></li>
+        <li><a href="/legal/user-agreement.html">用户服务协议</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------------- 首屏 ---------------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 48px 0 40px;
+    background:
+      radial-gradient(60% 40% at 50% 78%, rgba(123, 97, 255, 0.16), transparent 70%),
+      radial-gradient(30% 24% at 72% 70%, rgba(245, 213, 71, 0.16), transparent 70%),
+      linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #f6f4ff 100%);
+  }
+
+  @media (min-width: 734px) {
+    .hero {
+      padding: 72px 0 56px;
+    }
+  }
+
+  .product-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 21px;
+    font-weight: 600;
+  }
+
+  .product-mark {
+    width: 15px;
+    height: 26px;
+  }
+
+  .hero-lede {
+    max-width: 30em;
+    margin: 16px auto 28px;
+  }
+
+  .hero-visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  /* 这几个类加在 Phone 组件的根元素上，组件外的作用域样式要用 :global 才能命中 */
+  .hero-visual :global(.hero-center) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-visual :global(.hero-side) {
+    display: none;
+  }
+
+  @media (min-width: 734px) {
+    .hero-visual :global(.hero-side) {
+      display: block;
+      position: relative;
+      z-index: 1;
+      margin-bottom: -6px;
+    }
+
+    .hero-visual :global(.hero-left) {
+      margin-right: -20px;
+      transform: translateY(36px);
+    }
+
+    .hero-visual :global(.hero-right) {
+      margin-left: -20px;
+      transform: translateY(36px);
+    }
+  }
+
+  @media (min-width: 1068px) {
+    .hero-visual :global(.hero-left) {
+      margin-right: 28px;
+    }
+
+    .hero-visual :global(.hero-right) {
+      margin-left: 28px;
+    }
+  }
+
+  /* ---------------- 左右分栏 ---------------- */
+  .split {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 64px;
+    }
+
+    .split-reverse .split-copy {
+      order: 2;
+    }
+  }
+
+  .split-copy .lede {
+    margin-top: 16px;
+  }
+
+  .points {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0 8px;
+    list-style: none;
+  }
+
+  .points li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 17px;
+  }
+
+  .points li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.5em;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .split-visual {
+    display: grid;
+    justify-items: center;
+  }
+
+  .stack {
+    gap: 16px;
+    width: min(100%, 460px);
+    margin-inline: auto;
+  }
+
+  .stack :global(.party:nth-child(2)) {
+    margin-left: 32px;
+    margin-right: -16px;
+  }
+
+  @media (max-width: 480px) {
+    .stack :global(.party:nth-child(2)) {
+      margin-left: 12px;
+      margin-right: 0;
+    }
+  }
+
+  /* ---------------- 语音（深色） ---------------- */
+  .voice {
+    background:
+      radial-gradient(50% 40% at 50% 55%, rgba(123, 97, 255, 0.28), transparent 70%),
+      var(--bg-dark);
+  }
+
+  .voice-copy .lede {
+    max-width: 32em;
+    margin: 16px auto 0;
+  }
+
+  .voice-visual {
+    margin-top: 48px;
+  }
+
+  .voice-points {
+    display: grid;
+    gap: 24px;
+    margin: 56px auto 24px;
+    max-width: 980px;
+    list-style: none;
+    text-align: left;
+  }
+
+  @media (min-width: 734px) {
+    .voice-points {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
+
+  .voice-points strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 19px;
+  }
+
+  .voice-points span {
+    color: var(--text-on-dark-2);
+    font-size: 15px;
+  }
+
+  /* ---------------- 游戏 ---------------- */
+  .section-head {
+    margin-bottom: 40px;
+  }
+
+  .section-head .lede {
+    max-width: 34em;
+    margin: 16px auto 0;
+  }
+
+  .games-primary,
+  .games-secondary {
+    display: grid;
+    gap: 20px;
+  }
+
+  .games-secondary {
+    margin-top: 20px;
+  }
+
+  @media (min-width: 734px) {
+    .games-primary,
+    .games-secondary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .games-secondary {
+      margin-top: 24px;
+    }
+  }
+
+  .more {
+    margin-top: 28px;
+  }
+
+  /* ---------------- 三步 ---------------- */
+  .steps {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 40px;
+    list-style: none;
+  }
+
+  @media (min-width: 734px) {
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  .steps li {
+    padding: 28px 26px;
+    border-radius: var(--radius-card);
+    background: var(--bg-alt);
+  }
+
+  .num {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--text);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .steps h3 {
+    margin-bottom: 6px;
+  }
+
+  /* ---------------- 公司 ---------------- */
+  .company-line {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .company-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 24px;
+    margin-top: 12px;
+    list-style: none;
+  }
+
+  .company-links a {
+    display: inline-block;
+    padding: 8px 0;
+    font-size: 15px;
+  }
+</style>

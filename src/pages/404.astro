@@ -1,0 +1,71 @@
+---
+/**
+ * 404（需求文档 4.1）：nginx 以 404 状态返回本页（不是软 404）；不收录、不写规范地址。
+ */
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { content } from '../lib/content.ts'
+import { webEntryHref } from '../lib/entries.ts'
+
+const web = webEntryHref(content.releases)
+const links = [
+  { href: '/', label: '玉米圈首页' },
+  { href: '/games/', label: '支持的游戏' },
+  { href: '/download/', label: '下载与获取' },
+  { href: '/support/', label: '帮助与支持' },
+  ...(web ? [{ href: web, label: '进入网页版' }] : []),
+]
+---
+
+<BaseLayout
+  seo={{
+    path: '/404.html',
+    title: '页面不存在 - 玉米圈',
+    description: '你访问的页面不存在或已经移动。可以回到玉米圈首页，或查看游戏、下载与帮助。',
+    ogImage: '/og/home.jpg',
+    ogImageAlt: '玉米圈',
+    breadcrumbs: [],
+    dateModified: '2026-10-19',
+    indexable: false,
+  }}
+  showBreadcrumbs={false}
+>
+  <section class="section">
+    <div class="container-text center">
+      <p class="eyebrow">404</p>
+      <h1 class="headline-page">这个页面不存在</h1>
+      <p class="lede lost">链接可能已经失效，或者页面已经移动。可以从这里继续：</p>
+      <ul class="links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>
+                {l.label} <span aria-hidden="true">›</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lost {
+    margin: 18px auto 32px;
+  }
+
+  .links {
+    display: grid;
+    gap: 6px;
+    justify-items: center;
+    list-style: none;
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 44px;
+    font-size: 19px;
+  }
+</style>

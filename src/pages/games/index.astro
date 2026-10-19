@@ -1,0 +1,126 @@
+---
+/**
+ * 游戏总览（需求文档 FR11）：顺序为双影奇境、星露谷物语、泰拉瑞亚、怪物猎人；
+ * 卡片显示正式游戏名、场景简介与详情入口，作品与开放平台分开列出，不把各平台写成可以无条件互通。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import GameCard from '../../components/GameCard.astro'
+import CtaGroup from '../../components/CtaGroup.astro'
+import { content } from '../../lib/content.ts'
+import { staticPages } from '../../lib/pages.ts'
+
+const page = staticPages(content).games
+const { publishedGames } = content
+const primary = publishedGames.filter((g) => g.tier === 'primary')
+const secondary = publishedGames.filter((g) => g.tier === 'secondary')
+---
+
+<BaseLayout
+  seo={{
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+    ogImage: page.ogImage,
+    ogImageAlt: page.ogImageAlt,
+    breadcrumbs: [{ name: page.name, path: page.path }],
+    pageType: 'CollectionPage',
+    dateModified: page.updatedAt,
+    videoGames: publishedGames.flatMap((g) =>
+      g.titles
+        .filter((t) => t.supportStatus === 'open')
+        .map((t) => ({ name: t.name, alternateName: t.englishName, sameAs: t.officialSite })),
+    ),
+  }}
+>
+  <section class="intro">
+    <div class="container-text center">
+      <p class="eyebrow">游戏</p>
+      <h1 class="headline-page">这些游戏，在玉米圈找搭子</h1>
+      <p class="lede intro-lede">
+        我们为下面几款游戏整理了找搭子的场景，和组队前需要说清楚的事。游戏本身能否联机、能否跨平台，以各游戏官方的规则为准。
+      </p>
+    </div>
+  </section>
+
+  <section class="section-tight bg-alt">
+    <div class="container">
+      <h2 class="visually-hidden">主推游戏</h2>
+      <div class="grid grid-primary">
+        {primary.map((g) => <GameCard game={g} size="large" showPlatforms />)}
+      </div>
+      <h2 class="visually-hidden">更多游戏</h2>
+      <div class="grid grid-secondary">
+        {secondary.map((g) => <GameCard game={g} size="small" showPlatforms />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-text">
+      <div class="note-block" data-reveal>
+        <h2 class="headline-card">关于跨平台</h2>
+        <p class="text-2">
+          是否能在游戏中联机，取决于具体游戏、作品、平台和版本。玉米圈提供找搭子与沟通入口，实际游戏内联机仍需符合游戏规则。请查看对应游戏的说明，并在组队前确认条件。
+        </p>
+      </div>
+      <div class="note-block" data-reveal="1">
+        <h2 class="headline-card">其他游戏</h2>
+        <p class="text-2">
+          除了上面几款，App 和网页版里还能为其他热门联机游戏找队，以产品里的游戏列表为准。新游戏有了专门的找搭子说明后，会在这里补充。
+        </p>
+      </div>
+      <div class="center cta">
+        <CtaGroup align="center" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: 56px 0 48px;
+  }
+
+  @media (min-width: 734px) {
+    .intro {
+      padding: 88px 0 64px;
+    }
+  }
+
+  .intro-lede {
+    margin-top: 18px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .grid-secondary {
+    margin-top: 20px;
+  }
+
+  @media (min-width: 734px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .grid-secondary {
+      margin-top: 24px;
+    }
+  }
+
+  .note-block + .note-block {
+    margin-top: 40px;
+  }
+
+  .note-block h2 {
+    margin-bottom: 10px;
+  }
+
+  .cta {
+    margin-top: 48px;
+  }
+</style>

@@ -1,0 +1,122 @@
+# 支持中心 FAQ（需求文档 FR16）。答案对应当前发布版本；改动后更新 updatedAt。
+# 答案里可以写 [文字](/站内路径/) 或 [文字](https://白名单地址) 形式的链接；{supportEmail} 会换成用户支持邮箱。
+# requires：只有对应能力开放时才显示（product.yaml 的 capabilities 键，或 web = 网页版入口已开放）。
+# 每个段落写成一行，段落之间空一行。
+faqs:
+  - id: what-is
+    category: product
+    question: 玉米圈是什么？
+    answer: |
+      玉米圈是一款用于线上寻找游戏搭子、查看队伍和进行语音开黑的产品，覆盖双影奇境、星露谷物语、泰拉瑞亚、怪物猎人等游戏场景。
+
+      你可以按游戏查看正在招人的队伍，也可以填好游戏名片，让游玩节奏合拍的玩家找到你；约好以后，在队伍语音里一起开黑。
+    updatedAt: 2026-10-19
+
+  - id: games
+    category: product
+    question: 玉米圈支持哪些游戏？
+    answer: |
+      官网重点介绍双影奇境、星露谷物语、泰拉瑞亚和怪物猎人（荒野、世界）这几类场景。App 和网页版里还能为其他热门联机游戏找队，以产品里的游戏列表为准。
+
+      各游戏当前开放的平台和找队方式，请看[游戏页面](/games/)。
+    updatedAt: 2026-10-19
+
+  - id: download
+    category: start
+    question: 怎样下载玉米圈？
+    answer: |
+      请在[下载页](/download/)查看 iPhone 和 Android 的当前获取方式和版本信息。请只从下载页列出的官方渠道获取玉米圈，不要安装来源不明的安装包。
+    updatedAt: 2026-10-19
+
+  - id: web
+    category: start
+    question: 怎样进入网页版？
+    requires: web
+    answer: |
+      在电脑或手机浏览器里打开[网页版](/web/)，用手机号和验证码登录即可，未注册的手机号会自动注册。网页版和 App 是同一个账号、同一个队伍。
+    updatedAt: 2026-10-19
+
+  - id: find-team
+    category: start
+    question: 怎样找队？
+    requires: teamList
+    answer: |
+      选好游戏后，在找队页查看正在招人的队伍：卡片上写着平台、开始时间、还差几人和语音习惯，合适就申请加入。
+
+      没有合适的队伍时，可以自己发车，也可以用"帮我找队"写下平台、目标和时间等条件，由玉米圈按条件帮你找人。
+    updatedAt: 2026-10-19
+
+  - id: microphone
+    category: voice
+    question: 语音开黑需要麦克风权限吗？
+    requires: teamVoice
+    answer: |
+      只有开麦说话时才需要。App 会在你第一次点"加入语音"时请求麦克风权限；网页版进入语音默认是静音的，你点开麦时浏览器才会请求。拒绝授权只影响开麦说话等需要麦克风的功能，详见[《设备权限调用说明》](/legal/permission-list.html)。
+
+      官网本身不会请求麦克风、摄像头、定位或通知权限。
+    updatedAt: 2026-10-19
+
+  - id: crossplay
+    category: start
+    question: 玉米圈支持跨平台吗？
+    answer: |
+      是否能在游戏中联机，取决于具体游戏、作品、平台和版本。玉米圈提供找搭子与沟通入口，实际游戏内联机仍需符合游戏规则。请查看[对应游戏的说明](/games/)，并在组队前确认条件。
+    updatedAt: 2026-10-19
+
+  - id: pricing
+    category: product
+    question: 玉米圈收费吗？
+    answer: |
+      找队、找搭子和队伍语音等功能目前不需要付费。App 内可能提供自愿购买的支持项目（例如纪念徽章），是否购买不影响使用这些功能；价格与内容以购买页面的展示为准。
+    updatedAt: 2026-10-19
+
+  - id: age
+    category: account
+    question: 多大可以使用玉米圈？
+    answer: |
+      玉米圈仅面向年满 18 周岁的用户。注册或登录时，需要确认自己已年满 18 周岁。
+    updatedAt: 2026-10-19
+
+  - id: report
+    category: safety
+    question: 遇到骚扰、诈骗或其他违规行为怎么办？
+    answer: |
+      在 App 里，可以在对应的用户、队伍或语音房成员处使用"举报"；在语音房里（App 和网页版都可以）点某位成员即可选择举报。涉及人身或财产安全的紧急情况，请先报警。
+
+      也可以发邮件到 {supportEmail}，写明对方昵称、发生时间和经过，并附上截图。处理规则见[《社区公约》](/legal/community-guidelines.html)。
+    updatedAt: 2026-10-19
+
+  - id: cannot-join
+    category: start
+    question: 约好了，但在游戏里加不进去怎么办？
+    requires: joinGuide
+    answer: |
+      队伍页提供对应游戏的联机步骤；照着做仍然加不进去时，可以在队伍里点"加不进去"，告诉队友当前遇到的情况。
+
+      能否在游戏里联机，还取决于游戏、平台、版本和网络，请先和队友核对这些条件。
+    updatedAt: 2026-10-19
+
+  - id: privacy-request
+    category: privacy
+    question: 怎样查看、更正或删除我的个人信息？
+    answer: |
+      大部分信息可以在 App 里直接查看、修改和删除；出境存储授权、推荐开关、谁能搜到你等设置在"我的"→"设置"→"隐私设置"。
+
+      其他个人信息请求，请发邮件到 {supportEmail}，我们会在 15 个工作日内答复。完整说明见[《隐私政策》](/legal/privacy-policy.html)。
+    updatedAt: 2026-10-19
+
+  - id: delete-account
+    category: account
+    question: 怎样注销账号？
+    answer: |
+      在 App 中依次进入"我的"→"设置"→"账号与安全"→"注销账号"，按提示验证本人身份后提交。提交后有 15 天冷静期，冷静期内重新登录可以恢复账号。
+
+      网页版不提供注销；无法在 App 内注销的（例如账号处于封禁期间），请发邮件到 {supportEmail} 申请。具体规则见[《隐私政策》](/legal/privacy-policy.html)第九章。
+    updatedAt: 2026-10-19
+
+  - id: contact
+    category: privacy
+    question: 怎样联系玉米圈？
+    answer: |
+      使用问题、投诉举报和个人信息请求，都可以发邮件到 {supportEmail}。发邮件时请写明你的注册手机号后四位和问题经过，不要发送密码、验证码或完整的聊天记录。
+    updatedAt: 2026-10-19

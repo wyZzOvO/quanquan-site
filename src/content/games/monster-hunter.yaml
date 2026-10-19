@@ -1,0 +1,135 @@
+# 怪物猎人系列页（需求文档 6.2：有多个作品时先进入系列页，再按已开放作品展示）。
+# 荒野、世界已开放（后端字典 mhwilds、mhw）；崛起：曙光尚未接入，只标"暂未开放"，不放找队操作。
+slug: monster-hunter
+status: published
+order: 4
+tier: secondary
+displayName: 怪物猎人
+englishName: Monster Hunter
+art: monster-hunter
+
+seo:
+  title: 怪物猎人找猎友与组队开黑 - 玉米圈
+  description: 先确认正在玩的作品，再找目标和节奏一致的猎友。在玉米圈为怪物猎人 荒野、怪物猎人：世界找队，写清目标怪物、HR / MR 要求和语音习惯。
+  keywords: [怪物猎人找猎友, 怪物猎人荒野组队, 怪物猎人世界联机, 怪猎找队]
+
+card:
+  tagline: 找到目标一致的猎友
+  summary: 先确认作品，再找目标和节奏一致的人。任务、等级与联机条件分别核对。
+
+h1: 找到目标一致的|猎友
+lead: 一起狩猎之前，先确认你们玩的是同一作。在玉米圈，怪物猎人 荒野和怪物猎人：世界分开找队；选好作品后，再按任务目标、HR / MR 要求和狩猎节奏，找到合拍的猎友。
+
+titles:
+  - code: mhwilds
+    name: 怪物猎人 荒野
+    englishName: Monster Hunter Wilds
+    supportStatus: open
+    openPlatforms: [Steam, PlayStation, Xbox]
+    platformNote: 按跨平台设置匹配：双方都没有关闭跨平台时，不同平台的人可以一起找队。
+    officialSite: https://www.monsterhunter.com/wilds/en-us/
+  - code: mhw
+    name: 怪物猎人：世界
+    englishName: 'Monster Hunter: World'
+    supportStatus: open
+    openPlatforms: [Steam, PlayStation, Xbox]
+    platformNote: 按平台分别找队，不同平台的人不会被匹配到一起。
+    officialSite: https://www.monsterhunter.com/world/us/
+  - code: mhrise
+    name: 怪物猎人 崛起：曙光
+    englishName: 'Monster Hunter Rise: Sunbreak'
+    supportStatus: planned
+    openPlatforms: []
+    platformNote: 暂未开放找队，开放后会更新这一页。
+    officialSite: https://www.monsterhunter.com/rise-sunbreak/en-us/
+
+scenes:
+  - title: 一起推主线
+    text: 刚入坑，想找人一起推剧情，不赶时间。
+  - title: 指定怪物
+    text: 想刷某只怪的素材，找目标一致的人反复狩猎。
+  - title: 挑战高难任务
+    text: 历战、活动等高难度任务，需要配合与装备门槛。
+  - title: 临时补位
+    text: 正在打的任务还差一个人，马上找人补上。
+
+agreements:
+  intro: 怪猎组队，目标不一致最容易散。先把这几件事写进队伍里：
+  items:
+    - title: 作品与平台
+      text: 荒野还是世界，各自在什么平台；玩荒野的话是否打开了跨平台。
+    - title: 任务目标
+      text: 推主线、指定怪物、刷素材还是活动任务，大概打几次。
+    - title: 等级门槛
+      text: 任务需要的 HR / MR，以及你们的进度要求。
+    - title: 节奏与氛围
+      text: 速刷还是慢慢打、欢迎新手吗、开不开麦。
+
+steps:
+  - title: 先选作品
+    text: 荒野和世界分开找队，先选你正在玩的那一作。
+  - title: 写清目标和门槛
+    text: 选好想打什么和目标怪物，填写 HR / MR 要求和语音习惯。
+  - title: 进队开猎
+    text: 加入后查看队长填好的加入信息，按步骤进游戏，开麦一起打。
+
+compatibility:
+  officialFacts:
+    - text: 怪物猎人 荒野支持 PS5、Xbox Series X|S 与 Steam 之间跨平台联机，在线最多 4 人。
+      sourceName: CAPCOM 怪物猎人 荒野官网
+      sourceUrl: https://www.monsterhunter.com/wilds/en-us/
+    - text: 荒野的跨平台只能整体打开或关闭（在标题画面的选项 › 游戏设置中修改）；设置不同的玩家，即使在同一平台也不能一起玩。
+      sourceName: CAPCOM 荒野常见问题
+      sourceUrl: https://www.monsterhunter.com/support/wilds/en/faq/detail/023
+    - text: 荒野联机不需要 CAPCOM ID；在 PS5 上在线游玩需要 PlayStation Plus。
+      sourceName: CAPCOM 荒野常见问题
+      sourceUrl: https://www.monsterhunter.com/support/wilds/en/faq/detail/036
+    - text: 荒野需要先推进一段剧情才能解锁联机；部分内容有猎人等级门槛，例如大集会所需要 HR 16 以上。
+      sourceName: CAPCOM 荒野系统介绍
+      sourceUrl: https://www.monsterhunter.com/wilds/en-us/system/
+    - text: 怪物猎人：世界的 PC 版只与 Steam 版玩家匹配，不支持跨平台联机；在线最多 4 人。
+      sourceName: CAPCOM 怪物猎人：世界 PC 版介绍
+      sourceUrl: https://www.monsterhunter.com/world/pc/us/
+    - text: 冰原（大师级内容）需要拥有怪物猎人：世界本体。
+      sourceName: CAPCOM 怪物猎人：世界 冰原官网
+      sourceUrl: https://www.monsterhunter.com/world-iceborne/us/
+    - text: 崛起：曙光的 PS4 与 PS5 版之间、Xbox 与 Windows（非 Steam）版之间可以互通；Switch 版与 Steam 版不支持跨平台联机。
+      sourceName: CAPCOM 崛起：曙光多平台说明
+      sourceUrl: https://www.monsterhunter.com/rise-xwp/en-us/
+  checkedAt: 2026-10-19
+  productNotes:
+    - 怪物猎人 荒野、怪物猎人：世界已开放找队，两作分开匹配，不会被放进同一个队伍。
+    - 可以按想打什么、目标怪物、HR / MR 最低要求和进度要求找队；你的游戏名片没填某项时，不会因此被排除。
+    - 荒野按跨平台设置匹配；世界按平台分别找队。
+    - 怪物猎人 崛起：曙光暂未开放找队。
+  userChecks:
+    - 双方是不是同一作、同一平台；玩荒野的话，跨平台设置是否一致（都开或都关）。
+    - 是否已推进到能联机的剧情进度，任务的 HR / MR 要求是否满足。
+    - 主机在线需要的会员（PlayStation Plus 等），以及队长填写的加入方式（集会所、邀请码等）。
+
+faqs:
+  - id: titles
+    question: 不同作品能放在一起找队吗？
+    answer: |
+      不能。荒野和世界是两款游戏，玉米圈分开找队；两作之间不能互相联机，组队前请先确认大家玩的是同一作。
+
+      同一作里也要分别核对平台：按 CAPCOM 官方说明，荒野的跨平台设置不同的人即使在同一平台也不能一起玩，世界的 PC 版只与 Steam 版玩家联机。
+  - id: rank
+    question: 怎样说明任务和等级？
+    answer: |
+      发车时选择想打什么和目标怪物，填写 HR / MR 最低要求和进度要求。你的游戏名片填了等级时，不满足要求的队伍会提示原因。
+
+      任务能否进入以游戏内规则为准：例如荒野需要先推进一段剧情才能联机，部分内容有 HR 门槛。
+  - id: rise
+    question: 怪物猎人 崛起：曙光能找队吗？
+    answer: |
+      暂时还不能。崛起：曙光的找队还在准备中，开放后会更新这一页。
+
+screen: team-list
+screenAlt: 玉米圈找队页界面示意：怪物猎人 荒野正在招人的队伍，显示平台、空位、开始时间和推荐理由
+demoParties: []
+
+related: [split-fiction, stardew-valley, terraria]
+reviewedBy: 玉米圈产品团队
+updatedAt: 2026-10-19
+scope: 适用于在玉米圈为怪物猎人 荒野、怪物猎人：世界找猎友；游戏内的联机、跨平台与任务准入规则以 CAPCOM 官方说明为准。

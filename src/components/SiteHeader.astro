@@ -1,0 +1,299 @@
+---
+/**
+ * 顶栏（需求文档 4.1、FR17）：吸顶、半透明（不支持模糊时用纯色），右侧始终有获取入口；
+ * 桌面多一个"进入网页版"（网页版未达到发布条件时不显示）。
+ * 移动端用 <details> 做菜单：没有脚本也能展开；脚本只补 Esc 关闭、焦点返回、滚动锁定。
+ */
+import { Image } from 'astro:assets'
+import mark from '../assets/brand/mark.png'
+import { content } from '../lib/content.ts'
+import { navCtaLabel, primaryCta } from '../lib/downloads.ts'
+import { webEntryHref } from '../lib/entries.ts'
+
+interface Props {
+  currentPath: string
+}
+
+const { currentPath } = Astro.props
+const links = [
+  { href: '/games/', label: '游戏' },
+  { href: '/features/', label: '功能' },
+  { href: '/support/', label: '支持' },
+  { href: '/about/', label: '关于半亩晴空' },
+]
+const mobileLinks = [{ href: '/', label: '玉米圈' }, ...links.slice(0, 2), { href: '/download/', label: '下载' }, ...links.slice(2)]
+const web = webEntryHref(content.releases)
+const cta = primaryCta(content.releases)
+const ctaShort = navCtaLabel(content.releases)
+
+function isCurrent(href: string): boolean {
+  return href === '/' ? currentPath === '/' : currentPath.startsWith(href)
+}
+---
+
+<header class="site-header">
+  <div class="bar container-wide">
+    <a class="brand" href="/" aria-label="玉米圈首页" aria-current={currentPath === '/' ? 'page' : undefined}>
+      <Image src={mark} alt="" width={13} height={22} densities={[2, 3]} loading="eager" decoding="async" class="brand-mark" />
+      <span class="brand-name">玉米圈</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="主导航">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      {web ? <a class="web-link" href={web}>进入网页版</a> : null}
+      <a class="btn btn-primary btn-small nav-cta" href={cta.href} aria-label={cta.label}>{ctaShort}</a>
+      <details class="nav-menu" data-nav-menu>
+        <summary aria-label="打开菜单" data-nav-toggle>
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
+        </summary>
+        <nav class="nav-mobile" aria-label="主导航（移动端）">
+          <ul>
+            {
+              mobileLinks.map((l) => (
+                <li>
+                  <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+            {
+              web ? (
+                <li>
+                  <a href={web}>进入网页版</a>
+                </li>
+              ) : null
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  import '../scripts/nav.ts'
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(22, 22, 30, 0.08);
+  }
+
+  /* 半透明 + 模糊放在伪元素上：backdrop-filter 会让元素成为 fixed 子元素的定位参照，
+     直接加在顶栏上会把移动端菜单面板限制在顶栏的 52px 里 */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, 0.97);
+  }
+
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .site-header::before {
+      background: rgba(255, 255, 255, 0.78);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: var(--nav-h);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 13px;
+    height: 22px;
+  }
+
+  .nav-desktop {
+    display: none;
+    flex: 1;
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-desktop a,
+  .web-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: rgba(22, 22, 30, 0.82);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+
+  .nav-desktop a:hover,
+  .web-link:hover,
+  .nav-desktop a[aria-current='page'] {
+    color: var(--text);
+  }
+
+  .nav-desktop a[aria-current='page'] {
+    font-weight: 600;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .web-link {
+    display: none;
+    margin-right: 6px;
+  }
+
+  .nav-cta {
+    min-width: 64px;
+  }
+
+  /* 菜单按钮：两条线，展开时变成 × */
+  .nav-menu > summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    border-radius: 12px;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .nav-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .burger {
+    position: relative;
+    width: 18px;
+    height: 12px;
+  }
+
+  .burger span {
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 1.5px;
+    border-radius: 1px;
+    background: var(--text);
+    transition: transform 240ms var(--ease), top 240ms var(--ease);
+  }
+
+  .burger span:first-child {
+    top: 2px;
+  }
+
+  .burger span:last-child {
+    top: 9px;
+  }
+
+  .nav-menu[open] .burger span:first-child {
+    top: 5.5px;
+    transform: rotate(45deg);
+  }
+
+  .nav-menu[open] .burger span:last-child {
+    top: 5.5px;
+    transform: rotate(-45deg);
+  }
+
+  .nav-mobile {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px var(--gutter) 48px;
+    overflow-y: auto;
+    background: var(--bg);
+    animation: menu-in 260ms var(--ease);
+  }
+
+  .nav-mobile ul {
+    list-style: none;
+  }
+
+  .nav-mobile a {
+    display: block;
+    padding: 10px 0;
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+
+  .nav-mobile a[aria-current='page'] {
+    color: var(--accent-ink);
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (min-width: 834px) {
+    .nav-desktop {
+      display: block;
+    }
+
+    .web-link {
+      display: inline-flex;
+    }
+
+    .nav-menu {
+      display: none;
+    }
+  }
+</style>

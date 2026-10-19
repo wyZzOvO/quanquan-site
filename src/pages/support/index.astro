@@ -1,0 +1,267 @@
+---
+/**
+ * 支持中心（需求文档 FR16、9.2）：FAQ 按主题分组，真实邮箱与 App 内路径，需要提交的信息与处理方式；
+ * 公开网页不收集密码、验证码或完整聊天记录，首发不提供在线表单。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import FaqList from '../../components/FaqList.astro'
+import CopyButton from '../../components/CopyButton.astro'
+import { content, supportContact, visibleFaqs } from '../../lib/content.ts'
+import { staticPages } from '../../lib/pages.ts'
+import { webEntryHref } from '../../lib/entries.ts'
+import type { Faq } from '../../lib/schema.ts'
+
+const page = staticPages(content).support
+const web = webEntryHref(content.releases)
+const groups: { category: Faq['category']; title: string }[] = [
+  { category: 'product', title: '关于玉米圈' },
+  { category: 'start', title: '下载与开始使用' },
+  { category: 'voice', title: '语音开黑' },
+  { category: 'account', title: '账号' },
+  { category: 'safety', title: '安全与举报' },
+  { category: 'privacy', title: '个人信息与联系' },
+]
+const tiles = [
+  { href: '/download/', title: '下载与获取', text: '查看 iPhone、Android 的当前获取方式' },
+  ...(web ? [{ href: web, title: '进入网页版', text: '用手机号和验证码登录，和 App 同一个账号' }] : []),
+  { href: '#faq-report', title: '投诉与举报', text: '遇到骚扰、诈骗或违规内容' },
+  { href: '#faq-privacy-request', title: '个人信息请求', text: '查看、更正、删除你的个人信息' },
+  { href: '#faq-delete-account', title: '注销账号', text: 'App 内路径与冷静期说明' },
+  { href: '/legal/index.html', title: '协议与政策', text: '隐私政策、用户服务协议等全部文档' },
+]
+const legalDocs = [
+  { href: '/legal/privacy-policy.html', label: '隐私政策' },
+  { href: '/legal/user-agreement.html', label: '用户服务协议' },
+  { href: '/legal/personal-info-list.html', label: '个人信息收集清单' },
+  { href: '/legal/third-party-sharing.html', label: '第三方信息共享清单' },
+  { href: '/legal/permission-list.html', label: '设备权限调用说明' },
+  { href: '/legal/community-guidelines.html', label: '社区公约' },
+  { href: '/legal/index.html', label: '全部协议' },
+]
+---
+
+<BaseLayout
+  seo={{
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+    ogImage: page.ogImage,
+    ogImageAlt: page.ogImageAlt,
+    breadcrumbs: [{ name: page.name, path: page.path }],
+    dateModified: page.updatedAt,
+    faqs: visibleFaqs,
+  }}
+>
+  <section class="intro">
+    <div class="container-text center">
+      <p class="eyebrow">支持</p>
+      <h1 class="headline-page">玉米圈帮助与支持</h1>
+      <p class="lede intro-lede">常见问题、投诉举报、个人信息请求和账号注销，都可以在这里找到说明。</p>
+    </div>
+  </section>
+
+  <section class="section-tight bg-alt">
+    <div class="container">
+      <h2 class="visually-hidden">常用入口</h2>
+      <ul class="tiles">
+        {
+          tiles.map((t) => (
+            <li>
+              <a href={t.href}>
+                <span class="tile-title">{t.title}</span>
+                <span class="tile-text">{t.text}</span>
+                <span class="chev" aria-hidden="true">
+                  ›
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-text">
+      <h2 class="headline-section">常见问题</h2>
+      {
+        groups.map((g) => {
+          const items = visibleFaqs.filter((f) => f.category === g.category)
+          return items.length ? (
+            <div class="group">
+              <h3 class="group-title">{g.title}</h3>
+              <FaqList items={items} headingLevel="h4" />
+            </div>
+          ) : null
+        })
+      }
+    </div>
+  </section>
+
+  <section class="section bg-alt" id="contact">
+    <div class="container-text">
+      <h2 class="headline-section">联系我们</h2>
+      <div class="contact-card">
+        <p class="contact-label">{supportContact.label}</p>
+        <p class="contact-value"><a href={`mailto:${supportContact.value}`}>{supportContact.value}</a></p>
+        <CopyButton value={supportContact.value} label="复制邮箱" />
+        <ul class="contact-tips">
+          <li>请写明你的注册手机号后四位、遇到的问题和发生时间，必要时附上截图。</li>
+          <li>不要在邮件里发送密码、验证码或完整的聊天记录。</li>
+          <li>个人信息相关的请求，我们会在 15 个工作日内答复；其他问题会尽快回复。</li>
+        </ul>
+      </div>
+      <h3 class="group-title legal-title">协议与政策</h3>
+      <ul class="legal-list">
+        {
+          legalDocs.map((d) => (
+            <li>
+              <a href={d.href}>{d.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: 56px 0 48px;
+  }
+
+  @media (min-width: 734px) {
+    .intro {
+      padding: 88px 0 64px;
+    }
+  }
+
+  .intro-lede {
+    margin-top: 18px;
+  }
+
+  .tiles {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+  }
+
+  @media (min-width: 734px) {
+    .tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+  }
+
+  @media (min-width: 1068px) {
+    .tiles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .tiles a {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    height: 100%;
+    padding: 22px 48px 22px 24px;
+    border-radius: 22px;
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 200ms var(--ease);
+  }
+
+  .tiles a:hover {
+    transform: translateY(-2px);
+  }
+
+  .tile-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .tile-text {
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  .tiles .chev {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-2);
+    font-size: 22px;
+  }
+
+  .group {
+    margin-top: 40px;
+  }
+
+  .group-title {
+    margin-bottom: 8px;
+    color: var(--text-2);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .contact-card {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 28px;
+    border-radius: var(--radius-card);
+    background: var(--bg);
+  }
+
+  .contact-label {
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  .contact-value {
+    font-size: 21px;
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .contact-tips {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+    padding-left: 1.2em;
+    color: var(--text-2);
+    font-size: 15px;
+  }
+
+  .legal-title {
+    margin-top: 40px;
+  }
+
+  .legal-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+  }
+
+  .legal-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .legal-list a:hover {
+    color: var(--accent-ink);
+  }
+</style>

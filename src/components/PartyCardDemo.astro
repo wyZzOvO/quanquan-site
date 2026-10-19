@@ -1,0 +1,158 @@
+---
+/**
+ * 队伍卡片的界面示意：按网页版找队卡片的结构重绘（演示数据），用于没有截图的游戏场景。
+ */
+interface Tag {
+  text: string
+  tone?: 'green' | 'amber' | 'violet' | 'gray'
+}
+
+interface Props {
+  initial: string
+  title: string
+  meta: string
+  tags: Tag[]
+  host: string
+  action: string
+  reason?: string
+}
+
+const { initial, title, meta, tags, host, action, reason } = Astro.props
+---
+
+<div class="party" data-reveal>
+  <div class="top">
+    <span class="icon" aria-hidden="true">{initial}</span>
+    <div class="text">
+      <p class="title">{title}</p>
+      <p class="meta">{meta}</p>
+    </div>
+  </div>
+  <ul class="tags">
+    {tags.map((t) => <li class:list={['tag', `tone-${t.tone ?? 'gray'}`]}>{t.text}</li>)}
+  </ul>
+  <div class="bottom">
+    <span class="host"><span class="host-avatar" aria-hidden="true">{host.slice(0, 1)}</span>{host}</span>
+    <span class="action">{action}</span>
+  </div>
+  {reason ? <p class="reason">✓ {reason}</p> : null}
+</div>
+
+<style>
+  .party {
+    padding: 20px;
+    border: 1px solid var(--line-soft);
+    border-radius: 22px;
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+
+  .top {
+    display: flex;
+    gap: 14px;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .meta {
+    margin-top: 2px;
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    list-style: none;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .tone-gray {
+    background: #efeff3;
+    color: #4a4a52;
+  }
+
+  .tone-green {
+    background: #e3f4ea;
+    color: #17683a;
+  }
+
+  .tone-amber {
+    background: #fdf1dc;
+    color: #8a5a00;
+  }
+
+  .tone-violet {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .host {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  .host-avatar {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #3a8f4f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .action {
+    padding: 7px 16px;
+    border-radius: 12px;
+    background: var(--accent-ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .reason {
+    margin-top: 12px;
+    color: var(--text-2);
+    font-size: 13px;
+  }
+</style>

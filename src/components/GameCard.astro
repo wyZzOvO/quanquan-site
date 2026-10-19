@@ -1,0 +1,172 @@
+---
+/**
+ * 游戏卡片（首页、游戏总览、相关游戏）：插画 + 正式游戏名 + 场景简介 + 查看详情。
+ * 整张卡可点，可访问名称只取游戏名（标题里的链接向外扩展点击区域）。
+ */
+import GameArt from './GameArt.astro'
+import type { GamePage } from '../lib/schema.ts'
+import { gamePath } from '../lib/pages.ts'
+
+interface Props {
+  game: GamePage
+  size?: 'large' | 'small'
+  headingLevel?: 'h2' | 'h3'
+  /** 显示已开放的作品与平台（游戏总览页） */
+  showPlatforms?: boolean
+}
+
+const { game, size = game.tier === 'primary' ? 'large' : 'small', headingLevel = 'h3', showPlatforms = false } = Astro.props
+const Heading = headingLevel
+const openTitles = game.titles.filter((t) => t.supportStatus === 'open')
+---
+
+<article class:list={['game-card', `game-card-${size}`]} data-reveal>
+  <div class="art">
+    <GameArt variant={game.art} uid={`card-${game.slug}`} />
+  </div>
+  <div class="body">
+    <p class="en">{game.englishName}</p>
+    <Heading class="name">
+      <a href={gamePath(game)} class="stretched">{game.displayName}</a>
+    </Heading>
+    <p class="tagline">{game.card.tagline}</p>
+    <p class="summary">{game.card.summary}</p>
+    {
+      showPlatforms ? (
+        <ul class="platforms" aria-label={`${game.displayName}当前开放的作品与平台`}>
+          {openTitles.map((t) => (
+            <li>
+              {game.titles.length > 1 ? <span class="title-name">{t.name}</span> : null}
+              <span class="platform-list">{t.openPlatforms.join(' · ')}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null
+    }
+    <span class="link-more" aria-hidden="true">查看找搭子方式 <span class="chev">›</span></span>
+  </div>
+</article>
+
+<style>
+  .game-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-card);
+    background: var(--bg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 240ms var(--ease),
+      box-shadow 240ms var(--ease);
+  }
+
+  .game-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 1px 2px rgba(22, 22, 30, 0.05),
+      0 20px 44px -16px rgba(22, 22, 30, 0.2);
+  }
+
+  .game-card:focus-within {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .art {
+    aspect-ratio: 16 / 9;
+    background: #ddd;
+  }
+
+  .game-card-large .art {
+    aspect-ratio: 16 / 10;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 24px 24px 18px;
+  }
+
+  @media (min-width: 734px) {
+    .game-card-large .body {
+      padding: 32px 36px 24px;
+    }
+  }
+
+  .en {
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .name {
+    margin-top: 2px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .game-card-large .name {
+    font-size: clamp(26px, 3vw, 34px);
+  }
+
+  .name a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .name a:focus-visible {
+    outline: none;
+  }
+
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .tagline {
+    margin-top: 6px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .summary {
+    margin-top: 6px;
+    color: var(--text-2);
+    font-size: 15px;
+  }
+
+  .platforms {
+    margin-top: 12px;
+    list-style: none;
+    font-size: 13px;
+  }
+
+  .platforms li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+    padding: 4px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .title-name {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .platform-list {
+    color: var(--text-2);
+  }
+
+  .link-more {
+    margin-top: auto;
+    padding-top: 10px;
+    color: var(--accent-ink);
+  }
+</style>

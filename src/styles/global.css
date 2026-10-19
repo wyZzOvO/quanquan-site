@@ -1,0 +1,590 @@
+/*
+ * 设计令牌与基础样式（需求文档 10.2、10.3、11 章）。
+ * 视觉参考 Apple 官网的留白、字号层级与分段叙事；颜色沿用玉米圈 App 的紫色 #7B61FF，黄色只做少量点缀。
+ * 对比度（WCAG 2.2 AA）：正文 #16161E / 次要文字 #62626A 在白与浅灰上都 ≥ 5.5:1；
+ * 按钮底色与链接用加深的 #654AF0（白字 5.5:1、浅灰上 5.1:1），#7B61FF 只用于装饰与大字号。
+ */
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f5f5f7;
+  --bg-dark: #0b0a12;
+  --bg-dark-2: #17151f;
+  --text: #16161e;
+  --text-2: #62626a;
+  --text-on-dark: #f5f5f7;
+  --text-on-dark-2: #a1a1a6;
+  --line: #d9d9de;
+  --line-soft: #e8e8ed;
+  --accent: #7b61ff;
+  --accent-ink: #654af0;
+  --accent-ink-hover: #5a3fe6;
+  --accent-soft: #efebff;
+  --accent-on-dark: #b4a6ff;
+  --corn: #f5d547;
+  --success: #1f8a4c;
+
+  --font: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Source Han Sans SC', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --container: 1120px;
+  --container-wide: 1440px;
+  --gutter: 24px;
+  --nav-h: 52px;
+  --radius-card: 28px;
+  --radius-small: 16px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(22, 22, 30, 0.04), 0 12px 32px -12px rgba(22, 22, 30, 0.12);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+}
+
+@media (min-width: 734px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+@media (min-width: 1068px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+@media (max-width: 359px) {
+  :root {
+    --gutter: 16px;
+  }
+}
+
+/* ---------------------------- 基础 ---------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  body {
+    overflow-x: clip;
+  }
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+}
+
+a {
+  color: var(--accent-ink);
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(123, 97, 255, 0.22);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--text);
+  color: #fff;
+  font-size: 15px;
+}
+
+.skip-link:focus {
+  top: 12px;
+  text-decoration: none;
+}
+
+/* ---------------------------- 版式 ---------------------------- */
+
+.container {
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin-inline: auto;
+}
+
+.container-wide {
+  width: min(100% - var(--gutter) * 2, var(--container-wide));
+  margin-inline: auto;
+}
+
+.container-text {
+  width: min(100% - var(--gutter) * 2, 780px);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: 72px;
+}
+
+@media (min-width: 734px) {
+  .section {
+    padding-block: 96px;
+  }
+}
+
+@media (min-width: 1068px) {
+  .section {
+    padding-block: 128px;
+  }
+}
+
+.section-tight {
+  padding-block: 56px;
+}
+
+@media (min-width: 1068px) {
+  .section-tight {
+    padding-block: 80px;
+  }
+}
+
+.bg-alt {
+  background: var(--bg-alt);
+}
+
+.bg-dark {
+  background: var(--bg-dark);
+  color: var(--text-on-dark);
+}
+
+.bg-dark a {
+  color: var(--accent-on-dark);
+}
+
+.center {
+  text-align: center;
+}
+
+/* ---------------------------- 文字层级 ---------------------------- */
+
+.eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--accent-ink);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 734px) {
+  .eyebrow {
+    font-size: 21px;
+  }
+}
+
+.bg-dark .eyebrow {
+  color: var(--accent-on-dark);
+}
+
+.headline-hero {
+  font-size: clamp(36px, 7.2vw, 80px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.headline-section {
+  font-size: clamp(28px, 4.6vw, 56px);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.headline-card {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.headline-small {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: clamp(17px, 1.7vw, 21px);
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+.bg-dark .lede {
+  color: var(--text-on-dark-2);
+}
+
+.text-2 {
+  color: var(--text-2);
+}
+
+.small {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.prose p + p {
+  margin-top: 0.9em;
+}
+
+.prose ul {
+  margin: 0.6em 0 0;
+  padding-left: 1.2em;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+/* ---------------------------- 操作 ---------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.center .actions,
+.actions.center {
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--accent-ink);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-ink-hover);
+  color: #fff;
+}
+
+.btn-secondary {
+  border-color: var(--accent-ink);
+  background: transparent;
+  color: var(--accent-ink);
+}
+
+.btn-secondary:hover {
+  background: var(--accent-ink);
+  color: #fff;
+}
+
+.bg-dark .btn-secondary {
+  border-color: var(--accent-on-dark);
+  color: var(--accent-on-dark);
+}
+
+.bg-dark .btn-secondary:hover {
+  background: var(--accent-on-dark);
+  color: var(--bg-dark);
+}
+
+.btn-small {
+  min-height: 32px;
+  padding: 5px 14px;
+  font-size: 14px;
+}
+
+.btn[aria-disabled='true'],
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 文字链接 + 箭头（"了解更多 ›"） */
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+@media (min-width: 734px) {
+  .link-more {
+    font-size: 19px;
+  }
+}
+
+.link-more .chev {
+  display: inline-block;
+  transition: transform 160ms ease;
+}
+
+.link-more:hover .chev {
+  transform: translateX(2px);
+}
+
+/* ---------------------------- 卡片 ---------------------------- */
+
+.card {
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.bg-alt .card {
+  box-shadow: var(--shadow-card);
+}
+
+.card-alt {
+  border-radius: var(--radius-card);
+  background: var(--bg-alt);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.badge-muted {
+  background: #ececf0;
+  color: var(--text-2);
+}
+
+.badge-corn {
+  background: #fbefb0;
+  color: #5c4a00;
+}
+
+.badge-success {
+  background: #e3f4ea;
+  color: #17683a;
+}
+
+/* "界面示意"标注 */
+.illustration-note {
+  display: block;
+  margin-top: 14px;
+  color: var(--text-2);
+  font-size: 13px;
+  text-align: center;
+}
+
+.bg-dark .illustration-note {
+  color: var(--text-on-dark-2);
+}
+
+/* ---------------------------- 入场动效（需求文档 11.2） ---------------------------- */
+/* 只有脚本运行并确认元素在首屏之外时才加 .reveal-pending，禁用脚本或减弱动效时内容始终可见 */
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 480ms var(--ease),
+    transform 480ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------- 表格（窄屏在容器内横向滚动） ---------------------------- */
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.table-scroll th,
+.table-scroll td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table-scroll th {
+  color: var(--text-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 移动端菜单打开时锁定页面滚动（nav.ts） */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* 中文标题优先在标点或 <wbr> 处换行（不把"决定"拆成两行）；一行放不下时仍可在任意位置断开，避免溢出 */
+.headline-hero,
+.headline-section,
+.headline-card,
+.eyebrow {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 居中的导语在宽屏上也按标点换行并平衡行长；窄屏按普通中文排版，避免一句一行 */
+@media (min-width: 734px) {
+  .center .lede,
+  .lede.center {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+}
+
+/* 内容页的主标题（首页以外） */
+.headline-page {
+  font-size: clamp(32px, 5.4vw, 64px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 短句导语：只在标点处换行并平衡行长（首页首屏等） */
+.keep-lines {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}

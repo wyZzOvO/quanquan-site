@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "product": "玉米圈",
+  "updatedAt": "2026-10-19",
+  "channels": [
+    {
+      "id": "ios-app-store",
+      "platform": "ios",
+      "kind": "app_store",
+      "label": "App Store",
+      "status": "coming_soon",
+      "url": null,
+      "version": null,
+      "releasedAt": null,
+      "requirement": null,
+      "note": "iPhone 版正在准备上架 App Store，上架后会在这里给出商店链接。",
+      "betaScope": null,
+      "apk": null
+    },
+    {
+      "id": "android-stores",
+      "platform": "android",
+      "kind": "android_store",
+      "label": "应用商店",
+      "status": "coming_soon",
+      "url": null,
+      "version": null,
+      "releasedAt": null,
+      "requirement": null,
+      "note": "Android 版正在准备上架应用商店，上架后会在这里列出具体的商店和版本。",
+      "betaScope": null,
+      "apk": null
+    }
+  ],
+  "web": {
+    "enabled": true,
+    "url": "/web/",
+    "note": "网页版可以找队、发车、进入队伍语音，与 App 使用同一个账号、同一个队伍。"
+  },
+  "allowedHosts": ["apps.apple.com", "testflight.apple.com", "www.monster-ovo.cn"]
+}

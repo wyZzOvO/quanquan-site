@@ -1,0 +1,225 @@
+---
+/**
+ * 游戏卡片插画：原创抽象矢量图形（需求文档 6.3：不使用游戏官方的封面、角色、标志与宣传图）。
+ * 只表达场景氛围——双影的"两个世界"、星露谷的晨间农场、泰拉瑞亚的方块夜空、怪物猎人的黄昏荒野。
+ * 装饰图，对读屏隐藏。
+ */
+interface Props {
+  variant: 'split-fiction' | 'stardew-valley' | 'terraria' | 'monster-hunter'
+  /** 同一页出现多次时用来区分渐变 id */
+  uid?: string
+  class?: string
+}
+
+const { variant, uid = variant, class: className } = Astro.props
+const id = (name: string) => `${uid}-${name}`
+
+// 泰拉瑞亚的方块地形：16 列、每格 50，数字是每列从底部数起的方块数
+const terrainHeights = [4, 4, 5, 5, 4, 4, 3, 3, 4, 5, 5, 4, 4, 3, 4, 4]
+const cell = 50
+const rows = 10
+// 星露谷：作物行
+const cropRows = [0, 1, 2, 3, 4]
+---
+
+<svg
+  class:list={['game-art', className]}
+  viewBox="0 0 800 500"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {
+    variant === 'split-fiction' && (
+      <Fragment>
+        <defs>
+          <linearGradient id={id('left')} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#120d33" />
+            <stop offset="1" stop-color="#3a2b9c" />
+          </linearGradient>
+          <linearGradient id={id('right')} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffd59a" />
+            <stop offset="0.55" stop-color="#f59a7a" />
+            <stop offset="1" stop-color="#c8607f" />
+          </linearGradient>
+          <radialGradient id={id('glow')} cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.9" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="800" height="500" fill={`url(#${id('right')})`} />
+        <path d="M0 0 H470 L330 500 H0 Z" fill={`url(#${id('left')})`} />
+        <g stroke="#8b7bff" stroke-opacity="0.35" stroke-width="1.2">
+          <path d="M0 360 L360 360" />
+          <path d="M0 410 L345 410" />
+          <path d="M0 460 L333 460" />
+          <path d="M60 500 L200 330" />
+          <path d="M170 500 L250 330" />
+          <path d="M280 500 L300 330" />
+        </g>
+        <g fill="#ffffff">
+          <circle cx="70" cy="70" r="1.6" opacity="0.8" />
+          <circle cx="150" cy="120" r="1.2" opacity="0.6" />
+          <circle cx="240" cy="60" r="2" opacity="0.9" />
+          <circle cx="330" cy="140" r="1.3" opacity="0.6" />
+          <circle cx="110" cy="210" r="1.1" opacity="0.5" />
+          <circle cx="390" cy="50" r="1.4" opacity="0.7" />
+          <circle cx="40" cy="160" r="1" opacity="0.6" />
+        </g>
+        <circle cx="160" cy="170" r="54" fill="none" stroke="#b4a6ff" stroke-opacity="0.55" stroke-width="2" />
+        <circle cx="160" cy="170" r="36" fill="#7b61ff" fill-opacity="0.55" />
+        <circle cx="640" cy="120" r="62" fill="#fff4d6" fill-opacity="0.85" />
+        <path d="M470 500 C520 420 600 400 680 420 C730 432 770 410 800 380 V500 Z" fill="#ffffff" fill-opacity="0.32" />
+        <path d="M430 500 C500 450 560 445 620 460 C700 480 760 470 800 450 V500 Z" fill="#ffffff" fill-opacity="0.4" />
+        <path d="M470 0 L330 500" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" />
+        <circle cx="400" cy="250" r="120" fill={`url(#${id('glow')})`} opacity="0.55" />
+        <circle cx="372" cy="250" r="46" fill="#7b61ff" stroke="#ffffff" stroke-width="3" />
+        <circle cx="428" cy="250" r="46" fill="#f5d547" fill-opacity="0.92" stroke="#ffffff" stroke-width="3" />
+        <path d="M400 214 A46 46 0 0 1 400 286 A46 46 0 0 1 400 214 Z" fill="#ffffff" fill-opacity="0.9" />
+      </Fragment>
+    )
+  }
+  {
+    variant === 'stardew-valley' && (
+      <Fragment>
+        <defs>
+          <linearGradient id={id('sky')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#9fd8ff" />
+            <stop offset="0.7" stop-color="#e9f6ff" />
+            <stop offset="1" stop-color="#fff6dc" />
+          </linearGradient>
+          <linearGradient id={id('field')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7cc77a" />
+            <stop offset="1" stop-color="#3f9a5b" />
+          </linearGradient>
+        </defs>
+        <rect width="800" height="500" fill={`url(#${id('sky')})`} />
+        <circle cx="640" cy="105" r="52" fill="#ffd96a" />
+        <circle cx="640" cy="105" r="78" fill="#ffd96a" fill-opacity="0.22" />
+        <g fill="#ffffff" fill-opacity="0.92">
+          <ellipse cx="170" cy="90" rx="62" ry="20" />
+          <ellipse cx="210" cy="78" rx="40" ry="22" />
+          <ellipse cx="470" cy="60" rx="46" ry="14" />
+        </g>
+        <path d="M0 270 C140 220 260 230 400 262 C540 294 650 240 800 226 V500 H0 Z" fill="#a9dc8c" />
+        <path d="M0 312 C160 280 300 300 430 320 C560 340 680 300 800 290 V500 H0 Z" fill={`url(#${id('field')})`} />
+        <g transform="translate(560 214)">
+          <rect x="0" y="34" width="96" height="62" rx="6" fill="#d9644f" />
+          <path d="M-10 40 L48 0 L106 40 Z" fill="#9a3f34" />
+          <rect x="36" y="58" width="24" height="38" rx="3" fill="#fff1d6" />
+          <rect x="10" y="50" width="16" height="16" rx="2" fill="#fff1d6" />
+          <rect x="70" y="50" width="16" height="16" rx="2" fill="#fff1d6" />
+        </g>
+        <g>
+          {cropRows.map((r) => (
+            <g transform={`translate(${60 - r * 10} ${350 + r * 30})`}>
+              <rect x="0" y="0" width={430 + r * 30} height="14" rx="7" fill="#7a5233" fill-opacity="0.55" />
+              {Array.from({ length: 9 + r }, (_, i) => (
+                <g transform={`translate(${18 + i * (46 + r * 1.2)} -6)`}>
+                  <ellipse cx="0" cy="6" rx={7 + r} ry={9 + r} fill={i % 3 === 0 ? '#f5d547' : '#5fbf6a'} />
+                  <ellipse cx={6 + r} cy="2" rx={5 + r * 0.6} ry={7 + r * 0.6} fill="#4caf5f" />
+                </g>
+              ))}
+            </g>
+          ))}
+        </g>
+      </Fragment>
+    )
+  }
+  {
+    variant === 'terraria' && (
+      <Fragment>
+        <defs>
+          <linearGradient id={id('night')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0f0c2e" />
+            <stop offset="0.65" stop-color="#2d2878" />
+            <stop offset="1" stop-color="#4b3f9e" />
+          </linearGradient>
+          <radialGradient id={id('torch')} cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffcf6b" stop-opacity="0.95" />
+            <stop offset="1" stop-color="#ffcf6b" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="800" height="500" fill={`url(#${id('night')})`} />
+        <g fill="#ffffff">
+          <rect x="80" y="60" width="4" height="4" opacity="0.8" />
+          <rect x="190" y="120" width="3" height="3" opacity="0.6" />
+          <rect x="300" y="40" width="4" height="4" opacity="0.9" />
+          <rect x="420" y="100" width="3" height="3" opacity="0.6" />
+          <rect x="520" y="50" width="4" height="4" opacity="0.7" />
+          <rect x="710" y="150" width="3" height="3" opacity="0.6" />
+          <rect x="250" y="180" width="3" height="3" opacity="0.5" />
+        </g>
+        <circle cx="640" cy="92" r="44" fill="#f4f1ff" />
+        <circle cx="662" cy="80" r="40" fill="#1a1650" />
+        {terrainHeights.map((h, col) => (
+          <g>
+            {Array.from({ length: h }, (_, k) => {
+              const row = rows - 1 - k
+              const top = k === h - 1
+              const depth = h - 1 - k
+              const fill = top ? '#5cc44f' : depth <= 1 ? '#8b5a3c' : (col + k) % 4 === 0 ? '#7d7f95' : '#646579'
+              return <rect x={col * cell + 1} y={row * cell + 1} width={cell - 2} height={cell - 2} rx="3" fill={fill} />
+            })}
+          </g>
+        ))}
+        <g>
+          <circle cx="125" cy="236" r="46" fill={`url(#${id('torch')})`} />
+          <rect x="121" y="232" width="8" height="18" fill="#a06b3e" />
+          <rect x="119" y="222" width="12" height="12" rx="2" fill="#ffcf6b" />
+          <circle cx="625" cy="286" r="46" fill={`url(#${id('torch')})`} />
+          <rect x="621" y="282" width="8" height="18" fill="#a06b3e" />
+          <rect x="619" y="272" width="12" height="12" rx="2" fill="#ffcf6b" />
+        </g>
+        <g transform="translate(300 245)">
+          <rect x="0" y="40" width="100" height="65" fill="#9b6a43" stroke="#000" stroke-opacity="0.15" />
+          <path d="M-12 44 L50 0 L112 44 Z" fill="#7b61ff" />
+          <rect x="38" y="66" width="24" height="39" fill="#3d2a1d" />
+          <rect x="12" y="56" width="18" height="16" fill="#ffd98a" />
+        </g>
+      </Fragment>
+    )
+  }
+  {
+    variant === 'monster-hunter' && (
+      <Fragment>
+        <defs>
+          <linearGradient id={id('dusk')} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2a1640" />
+            <stop offset="0.5" stop-color="#a8432f" />
+            <stop offset="1" stop-color="#f4a95c" />
+          </linearGradient>
+          <radialGradient id={id('sun')} cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffe0a3" />
+            <stop offset="1" stop-color="#ffb56b" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="800" height="500" fill={`url(#${id('dusk')})`} />
+        <circle cx="520" cy="250" r="150" fill={`url(#${id('sun')})`} opacity="0.85" />
+        <circle cx="520" cy="250" r="66" fill="#ffd28c" />
+        <path d="M0 330 L120 230 L190 290 L300 170 L420 300 L520 220 L640 320 L720 260 L800 300 V500 H0 Z" fill="#6b2a35" />
+        <path d="M0 380 L90 330 L210 380 L330 300 L470 390 L590 330 L700 380 L800 350 V500 H0 Z" fill="#45192c" />
+        <path d="M0 440 C160 400 300 430 420 420 C560 408 680 440 800 420 V500 H0 Z" fill="#250d1d" />
+        <g stroke="#fff3e3" stroke-linecap="round" stroke-opacity="0.85">
+          <path d="M170 90 L280 250" stroke-width="10" />
+          <path d="M215 80 L325 240" stroke-width="12" />
+          <path d="M262 76 L362 222" stroke-width="9" />
+        </g>
+        <g fill="#ffcf8a">
+          <circle cx="120" cy="455" r="4" opacity="0.8" />
+          <circle cx="138" cy="440" r="3" opacity="0.6" />
+          <circle cx="104" cy="438" r="2.5" opacity="0.5" />
+        </g>
+      </Fragment>
+    )
+  }
+</svg>
+
+<style>
+  .game-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

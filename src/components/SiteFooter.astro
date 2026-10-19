@@ -1,0 +1,174 @@
+---
+/**
+ * 页脚（需求文档 5.3）：公司全称、版权年份、协议与支持链接、有效的网站备案与公安备案；
+ * 未取得的编号不展示，也不用示例字符串占位。
+ */
+import { content, copyrightYears } from '../lib/content.ts'
+import { PSB_PATTERN } from '../lib/loadContent.ts'
+import { gamePath } from '../lib/pages.ts'
+import { webEntryHref } from '../lib/entries.ts'
+
+const { company, settings, publishedGames, releases } = content
+const web = webEntryHref(releases)
+const psbCode = company.filings.psb?.match(PSB_PATTERN)?.[1] ?? null
+
+const columns = [
+  {
+    title: '玉米圈',
+    links: [
+      { href: '/', label: '产品首页' },
+      { href: '/features/', label: '功能' },
+      { href: '/download/', label: '下载' },
+      ...(web ? [{ href: web, label: '进入网页版' }] : []),
+    ],
+  },
+  {
+    title: '游戏',
+    links: [{ href: '/games/', label: '全部游戏' }, ...publishedGames.map((g) => ({ href: gamePath(g), label: g.displayName }))],
+  },
+  {
+    title: '支持',
+    links: [
+      { href: '/support/', label: '帮助中心' },
+      { href: '/support/#contact', label: '联系我们' },
+      { href: '/legal/index.html', label: '协议与政策' },
+    ],
+  },
+  {
+    title: '关于',
+    links: [{ href: '/about/', label: '关于半亩晴空' }],
+  },
+]
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="notes small">
+      <p>网站中的产品界面均为示意，展示的昵称、队伍、时间与消息为演示数据，功能以产品实际提供的为准。</p>
+      <p>{settings.trademarkNotice}</p>
+    </div>
+
+    <nav class="directory" aria-label="网站目录">
+      {
+        columns.map((col) => (
+          <div class="col">
+            <h2 class="col-title">{col.title}</h2>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+
+    <div class="legal-bar small">
+      <p class="copyright">
+        Copyright © {copyrightYears()} {company.legalName} 保留所有权利。
+        {company.operator.effective ? <span class="operator">玉米圈由{company.legalName}运营。</span> : null}
+      </p>
+      <ul class="legal-links">
+        <li><a href="/legal/privacy-policy.html">隐私政策</a></li>
+        <li><a href="/legal/user-agreement.html">用户服务协议</a></li>
+        {
+          company.filings.icp ? (
+            <li>
+              <a href="https://beian.miit.gov.cn/">{company.filings.icp}</a>
+            </li>
+          ) : null
+        }
+        {
+          company.filings.psb && psbCode ? (
+            <li>
+              <a href={`https://beian.mps.gov.cn/#/query/webSearch?code=${psbCode}`}>{company.filings.psb}</a>
+            </li>
+          ) : null
+        }
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 28px 0 32px;
+    background: var(--bg-alt);
+    color: var(--text-2);
+    font-size: 13px;
+  }
+
+  .notes {
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+
+  .notes p + p {
+    margin-top: 6px;
+  }
+
+  .directory {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: 734px) {
+    .directory {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .col-title {
+    margin-bottom: 8px;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .col ul {
+    list-style: none;
+  }
+
+  .col li + li {
+    margin-top: 2px;
+  }
+
+  .col a,
+  .legal-links a {
+    display: inline-block;
+    padding: 5px 0;
+    color: var(--text-2);
+  }
+
+  .col a:hover,
+  .legal-links a:hover {
+    color: var(--text);
+  }
+
+  .legal-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 24px;
+    padding-top: 16px;
+    font-size: 12.5px;
+  }
+
+  .operator {
+    margin-left: 6px;
+  }
+
+  .legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 18px;
+    list-style: none;
+  }
+</style>

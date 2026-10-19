@@ -1,0 +1,116 @@
+# 星露谷物语专题。玉米圈当前开放范围见 docs/campaign-games-v1.md 的平台矩阵：只开 PC 组（Steam / GOG），
+# 主机组建好但关闭。后台改了矩阵后，同步修改 openPlatforms、productNotes 与 FAQ。
+slug: stardew-valley
+status: published
+order: 2
+tier: primary
+displayName: 星露谷物语
+englishName: Stardew Valley
+art: stardew-valley
+
+seo:
+  title: 星露谷物语找农友与联机搭子 - 玉米圈
+  description: 从今晚一起种地，到每周固定经营农场。在玉米圈找作息和游玩节奏合拍的星露谷农友，开长期农场、约好每一次的时间。
+  keywords: [星露谷物语找农友, 星露谷联机, 星露谷物语联机搭子, 星露谷长期农场]
+
+card:
+  tagline: 找到作息合拍的农友
+  summary: 从今晚一起种地，到每周固定经营农场，先找到节奏合拍的人。
+
+h1: 找到作息合拍的|星露谷农友
+lead: 星露谷的多人农场能玩很久，最难的是找到作息和节奏都合得来的人。从今晚一起种地，到每周固定经营同一个农场：在玉米圈先对齐时间、进度和原版或模组，再一起开工。
+
+titles:
+  - code: stardew_valley
+    name: 星露谷物语
+    englishName: Stardew Valley
+    supportStatus: open
+    openPlatforms: [PC（Steam、GOG）]
+    platformNote: 目前只开放 PC 版的找队与长期农场；PlayStation、Xbox、Switch 版暂未开放匹配。
+    officialSite: https://www.stardewvalley.net/
+
+scenes:
+  - title: 今晚一起种地
+    text: 临时想玩一晚，去别人的农场帮忙，或者一起逛逛小镇。
+  - title: 新开一个长期农场
+    text: 从第一天开始，几个人一起经营同一个存档，慢慢把农场建起来。
+  - title: 加入已有农场
+    text: 房主已经开了档，想找固定的农友一起推进。
+  - title: 每周固定时间
+    text: 按大家都有空的时间来，几天一次，一次玩几个小时。
+
+agreements:
+  intro: 多人农场是一起住很久的地方。开始之前，把这几件事说清楚：
+  items:
+    - title: 新档还是已有农场
+      text: 从头开新档，还是加入谁的存档；存档在谁那里，谁就是房主。
+    - title: 房主的时间
+      text: 大家进的是房主的农场，所以要先对齐房主有空的时间。
+    - title: 游玩节奏
+      text: 一晚推进几天、要不要赶进度，大家各自负责种地、钓鱼、采矿还是战斗。
+    - title: 原版还是模组
+      text: 用原版还是装了 SMAPI 模组；装了模组的话，大家的模组要一致。
+    - title: 长期约定
+      text: 有人缺席时怎么办，多久没来算退出，农场的事怎么商量。
+
+steps:
+  - title: 选择星露谷物语
+    text: 在找队页或"长期农场"里选择星露谷物语，看看正在招人的农场。
+  - title: 对齐作息和节奏
+    text: 申请前看清房主的时间、进度和原版或模组；自己开档就把这些写清楚。
+  - title: 约好就开工
+    text: 加入后在固定队里约好下一次，进语音一起种地。
+
+compatibility:
+  officialFacts:
+    - text: PC 版自 1.6 起最多 8 人联机；加入的玩家，游戏版本和构建号要与房主一致。
+      sourceName: 星露谷物语官网（1.6 更新日志）
+      sourceUrl: https://www.stardewvalley.net/stardew-valley-1-6-update-full-changelog
+    - text: 多人游戏在房主的农场进行，每位农友需要一间小屋；房主不在线时，其他人无法进入这个农场。
+      sourceName: 星露谷物语官网（2018 年 8 月 1 日）
+      sourceUrl: https://www.stardewvalley.net/stardew-valley-1-3-multiplayer-update-is-now-available/
+    - text: PC 上的 Steam 版与 GOG 版可以通过邀请码一起玩；官方表示不打算把跨平台扩展到其他平台。
+      sourceName: 星露谷物语官网（2018 年 4 月 30 日）
+      sourceUrl: https://www.stardewvalley.net/stardew-valley-v1-3-beta/
+    - text: Xbox 版在线联机最多 4 人（PlayStation、Switch 版的商店页同样标注 4 人）。
+      sourceName: Xbox 商店
+      sourceUrl: https://www.xbox.com/en-US/games/store/stardew-valley/C3D891Z6TNQM
+    - text: 手机版的联机是实验性功能，只能通过 IP 地址加入，官方提示可能损坏存档。
+      sourceName: 星露谷物语官网（手机联机说明）
+      sourceUrl: https://www.stardewvalley.net/mobile-multiplayer-guide/
+  checkedAt: 2026-10-19
+  productNotes:
+    - 长期农场：几个人长期经营同一个存档。农场成员就是固定队成员，共用一个群聊，可以约好每一次的时间。
+    - 目前只开放 PC（Steam、GOG）的找队与长期农场，人数上限按 PC 版的 8 人；PlayStation、Xbox、Switch 版暂未开放匹配。
+    - 找队时会核对游戏版本与原版或模组，不兼容的农场默认不显示；也可以选择显示，并查看不兼容的原因。
+  userChecks:
+    - 房主的游戏版本，大家是否一致。
+    - 是否安装了 SMAPI 模组，大家的模组是否一致。
+    - 农场还有没有空的小屋，房主的在线时间是否合适。
+
+faqs:
+  - id: long-term
+    question: 怎样找长期农友？
+    answer: |
+      在"长期农场"里查看正在招募的农场，看清房主的时间、农场进度和原版或模组，合适就申请加入。
+
+      也可以自己创建长期农场，选择公开招募，写清楚你的作息和期望的节奏，让合拍的人来申请。加入的人会成为固定队成员，之后每一次都可以在群里约。
+  - id: host
+    question: 谁负责开农场？
+    answer: |
+      多人农场在房主的存档里，由存档所在的玩家当房主。按官方说明，房主不在线时其他人进不了这个农场，所以房主的在线时间决定了大家什么时候能玩。在玉米圈里，创建长期农场的人就是房主，负责安排每一次的时间。
+
+      PC 版最多 8 人一起玩，每位农友需要一间小屋；以官方最新说明为准。
+  - id: console
+    question: 主机版能用玉米圈找农友吗？
+    answer: |
+      目前只开放 PC 版（Steam、GOG）的找队与长期农场，PlayStation、Xbox、Switch 版暂未开放匹配。开放后会更新这一页。
+
+screen: campaigns-stardew
+screenAlt: 玉米圈长期农场界面示意：星露谷物语正在招募的长期农场，显示平台、进度和空位
+demoParties: []
+
+related: [split-fiction, terraria, monster-hunter]
+reviewedBy: 玉米圈产品团队
+updatedAt: 2026-10-19
+scope: 适用于在玉米圈为星露谷物语找农友；游戏内的联机方式、人数与跨平台规则以游戏官方说明为准。
