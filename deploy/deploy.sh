@@ -40,7 +40,8 @@ npm run build:production
 
 SHA="$(git rev-parse --short HEAD 2>/dev/null || echo nogit)"
 DIRTY=""
-if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+# 只看已跟踪文件的改动（IDE 生成的 .idea/ 等未跟踪文件不算）
+if [ -n "$(git status --porcelain --untracked-files=no 2>/dev/null)" ]; then
   DIRTY="+dirty"
 fi
 VERSION="$(date +%Y%m%d-%H%M%S)-${SHA}${DIRTY}"
