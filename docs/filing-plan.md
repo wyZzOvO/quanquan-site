@@ -44,7 +44,8 @@ App 还没有对公众上线，**现在是做这件事代价最小的时候**：
 6. **备案通过后**
    - 官网：备案号填进 `src/content/company.yaml → filings.icp`，然后 `./deploy/deploy.sh` → `./deploy/install-nginx.sh` → `./deploy/smoke.sh`。
    - App：新的 App 备案号写进 ju-mobile `lib/legal/legal_info.dart` 的 `kIcpNumber`，重新导出协议网页并部署后端；应用商店资料里的备案号一起更新。
-   - 按属地要求（通常是网站开通后 30 日内）到[全国互联网安全管理服务平台](https://beian.mps.gov.cn/)办理公安联网备案，号码填 `filings.psb`，页脚加公安备案图标。
+   - 按属地要求（通常是网站开通后 30 日内）到[全国互联网安全管理服务平台](https://beian.mps.gov.cn/)办理公安联网备案（填报指南见 quanquan 仓库
+     `docs/psb-filing/README.md`），号码填 `filings.psb` 的 `text` 与 `code`，页脚自动显示公安备案图标与查询链接。
 
 ## 四、另外要确认
 

@@ -6,12 +6,12 @@
  *   - 联系渠道：至少一个经过验证的邮箱；
  *   - 素材：全部审核通过；
  *   - 产物：按正式环境构建（允许收录、站点地图非空）。
- * "!"是提醒项（不阻断）：公司运营主体是否已对齐、搜索平台验证码、公安备案号等。
+ * "!"是提醒项（不阻断）：公司运营主体是否已对齐、搜索平台验证码、公安联网备案号（网站开通后 30 日内办理，首次上线时可以还没有）等。
  */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { resolveSiteEnv, isLocalHost } from '../src/lib/env.ts'
-import { ICP_PATTERN } from '../src/lib/loadContent.ts'
+import { filingReleaseChecks } from '../src/lib/filings.ts'
 import { loadSiteContent, ROOT } from './lib/content-node.mjs'
 
 const content = await loadSiteContent()
@@ -36,17 +36,11 @@ if (env) {
 }
 
 const { company, assets, settings, releases } = content
-const icp = company.filings.icp
-if (!icp) {
-  failures.push('网站 ICP 备案号未填写（src/content/company.yaml → filings.icp）。大陆服务器上的网站必须先完成备案')
-} else if (/A$/i.test(icp) || !ICP_PATTERN.test(icp)) {
-  failures.push(`网站 ICP 备案号不正确：${icp}`)
-} else {
-  ok.push(`网站 ICP 备案号 ${icp}`)
-}
-if (!company.filings.psb) {
-  notes.push('公安联网备案号未填写：按属地要求办理后填写 filings.psb，并把公安备案图标放到页脚')
-}
+// 备案：ICP 缺失或不对是阻断项；公安联网备案号缺失只提醒（规则见 src/lib/filings.ts）
+const filing = filingReleaseChecks(company.filings)
+ok.push(...filing.ok)
+notes.push(...filing.notes)
+failures.push(...filing.failures)
 
 const verified = company.contacts.filter((c) => c.verified)
 if (!verified.length) {

@@ -104,6 +104,40 @@ test('App 备案号不能当作网站 ICP 备案号，格式错误也拦下', ()
   assert.equal(load({ 'company.yaml': withIcp('null') }).company.filings.icp, null)
 })
 
+test('公安联网备案号：完整文字与编号都要填，格式正确、编号一致', () => {
+  const files = contentFiles()
+  // 不管当前填的是 null 还是多行的对象，都整体替换 psb 这一项（它是 filings 的最后一项）
+  const withPsb = (block: string) => files['company.yaml']!.replace(/^ {2}psb:.*(?:\n {4}.*)*/m, block)
+  const psb = (text: string, code: string) => withPsb(`  psb:\n    text: ${text}\n    code: ${code}`)
+  const problems = (yaml: string) => problemsOf(() => load({ 'company.yaml': yaml }))
+
+  assert.deepEqual(load({ 'company.yaml': psb('湘公网安备43010202000000号', '"43010202000000"') }).company.filings.psb, {
+    text: '湘公网安备43010202000000号',
+    code: '43010202000000',
+  })
+  // 平台写法里"备"与编号之间有一个空格的也接受，原样展示
+  assert.equal(
+    load({ 'company.yaml': psb('湘公网安备 43010202000000号', '"43010202000000"') }).company.filings.psb?.text,
+    '湘公网安备 43010202000000号',
+  )
+  assert.equal(load({ 'company.yaml': withPsb('  psb: null') }).company.filings.psb, null)
+
+  assert.ok(problems(psb('湘公网安备4301020200000号', '"4301020200000"')).some((p) => p.includes('公安联网备案号格式不对')))
+  assert.ok(problems(psb('湘公网安备43010202000000号', '"4301020200000"')).some((p) => p.includes('应为 14 位数字')))
+  assert.ok(problems(psb('湘公网安备43010202000000号', '"43010202000001"')).some((p) => p.includes('编号不一致')))
+  // 编号不加引号会被 YAML 读成数字
+  assert.ok(problems(psb('湘公网安备43010202000000号', '43010202000000')).some((p) => p.includes('要加引号')))
+  assert.ok(problems(withPsb('  psb:\n    text: 湘公网安备43010202000000号')).some((p) => p.includes('缺少备案编号')))
+  // 旧写法：只写一个字符串
+  assert.ok(problems(withPsb('  psb: 湘公网安备43010202000000号')).some((p) => p.includes('text 与 code 两项')))
+  // 多写的字段（拼写错误）也会被拒绝
+  assert.ok(
+    problems(withPsb('  psb:\n    text: 湘公网安备43010202000000号\n    code: "43010202000000"\n    url: https://beian.mps.gov.cn/')).some(
+      (p) => p.includes('filings.psb'),
+    ),
+  )
+})
+
 test('示例域名、占位邮箱不能进入内容', () => {
   const files = contentFiles()
   const placeholder = files['company.yaml']!.replaceAll('wyzzovo@gmail.com', 'support@example.com')

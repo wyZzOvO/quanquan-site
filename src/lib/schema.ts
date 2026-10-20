@@ -14,6 +14,49 @@ const href = z.string().trim().refine((v) => v.startsWith('/') || v.startsWith('
 
 // ============================== 公司 ==============================
 
+/**
+ * 公安联网备案号的完整文字，照全国互联网安全管理服务平台给出的写法：省简称 + 公网安备 + 14 位编号 + 号，
+ * 例如 湘公网安备43010202000000号（"备"与编号之间有一个空格的写法也接受）。第 1 个分组是编号。
+ */
+export const PSB_TEXT_PATTERN = /^[一-龥]公网安备 ?(\d{14})号$/
+/** 公安联网备案编号：14 位数字，页脚用它链接到平台的查询页 */
+export const PSB_CODE_PATTERN = /^\d{14}$/
+
+/** 公安联网备案：完整文字与编号都要填，且编号必须与文字里的一致 */
+export const PsbFilingSchema = z
+  .strictObject(
+    {
+      /** 页脚显示的完整文字，与平台给出的一字不差 */
+      text: z
+        .string({ error: (issue) => (issue.input === undefined ? '缺少完整文字 text' : 'text 应为文字') })
+        .trim()
+        .regex(PSB_TEXT_PATTERN, { error: '公安联网备案号格式不对，应为"湘公网安备43010202000000号"这样的写法' }),
+      /** 备案编号（14 位数字）；YAML 里要加引号写成字符串，否则会被读成数字 */
+      code: z
+        .string({
+          error: (issue) =>
+            issue.input === undefined ? '缺少备案编号 code' : '备案编号要加引号写成字符串，如 "43010202000000"',
+        })
+        .trim()
+        .regex(PSB_CODE_PATTERN, { error: '备案编号应为 14 位数字' }),
+    },
+    {
+      // 旧写法 psb: 湘公网安备…号（只写一个字符串）也会落到这里
+      error: (issue) =>
+        issue.code === 'invalid_type'
+          ? '公安联网备案要写成 text 与 code 两项（写法见 company.yaml 的注释），没有时写 null'
+          : undefined,
+    },
+  )
+  .refine(
+    (v) => {
+      // 字段本身不合格时只报字段的错，这里不重复报
+      const m = typeof v.text === 'string' ? v.text.match(PSB_TEXT_PATTERN) : null
+      return !m || typeof v.code !== 'string' || !PSB_CODE_PATTERN.test(v.code) || m[1] === v.code
+    },
+    { error: 'code 与完整文字里的编号不一致', path: ['code'] },
+  )
+
 export const ContactChannelSchema = z.strictObject({
   /** support 用户支持；business 商务合作；privacy 个人信息请求 */
   id: z.enum(['support', 'business', 'privacy']),
@@ -55,8 +98,8 @@ export const CompanySchema = z.strictObject({
   filings: z.strictObject({
     /** 网站 ICP 备案号（与域名、主体对应，不是 App 备案号）；未取得时为 null，页脚不展示 */
     icp: z.string().trim().nullable(),
-    /** 公安联网备案号，例如 湘公网安备43010202001234号；未取得时为 null */
-    psb: z.string().trim().nullable(),
+    /** 公安联网备案：{ text: 湘公网安备43010202000000号, code: "43010202000000" }；未取得时为 null，页脚不展示 */
+    psb: PsbFilingSchema.nullable(),
   }),
 })
 
@@ -276,6 +319,7 @@ export const SiteSettingsSchema = z.strictObject({
 })
 
 export type Company = z.infer<typeof CompanySchema>
+export type PsbFiling = z.infer<typeof PsbFilingSchema>
 export type ContactChannel = z.infer<typeof ContactChannelSchema>
 export type Product = z.infer<typeof ProductSchema>
 export type Releases = z.infer<typeof ReleasesSchema>

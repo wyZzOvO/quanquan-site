@@ -49,8 +49,7 @@ export class ContentError extends Error {
 
 /** 网站 ICP 备案号：湘ICP备2026012345号-1（App 备案号以字母 A 结尾，不能用在网站上） */
 export const ICP_PATTERN = /^[一-龥]ICP备\d{6,12}号(-\d{1,3})?$/
-/** 公安联网备案号：湘公网安备43010202001234号 */
-export const PSB_PATTERN = /^[一-龥]公网安备(\d{14})号$/
+// 公安联网备案号的格式（PSB_TEXT_PATTERN、PSB_CODE_PATTERN）定义在 schema.ts，页脚与发布检查用 filings.ts
 
 const PLACEHOLDER = /example\.(com|org|net)|占位|TODO|TBD|xxxx|test@|@test\./i
 
@@ -178,10 +177,7 @@ function checkCompany(company: Company, problems: string[]): void {
       problems.push(`company.yaml：网站 ICP 备案号格式不对：${icp}`)
     }
   }
-  const psb = company.filings.psb
-  if (psb !== null && !PSB_PATTERN.test(psb)) {
-    problems.push(`company.yaml：公安联网备案号格式不对：${psb}`)
-  }
+  // 公安联网备案号（filings.psb 的 text 与 code）的格式与一致性由 PsbFilingSchema 校验
 }
 
 function checkReleases(releases: Releases, problems: string[]): void {

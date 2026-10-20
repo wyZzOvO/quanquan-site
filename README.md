@@ -87,7 +87,8 @@ docs/               运营手册、验收记录
 1. **网站 ICP 备案**（已决定沿用 `www.monster-ovo.cn`，步骤见 [docs/filing-plan.md](docs/filing-plan.md)）：现有备案是北京的个人主体，
    公司登记在湖南，不能直接变更，要注销原备案后由公司在湖南重新备案网站和 App；注销到新备案通过之间，这个域名上的 App 接口和网页版都会中断。
    拿到备案号后填 `company.yaml → filings.icp`（`京ICP备2024092535号-1A` 是 App 备案号，不能用于网站，构建会拒绝）。
-2. **公安联网备案**：按属地公安机关的要求办理（通常要求网站开通后 30 日内），取得后填 `filings.psb`，并把公安备案图标放进页脚。
+2. **公安联网备案**：按属地公安机关的要求办理（通常要求网站开通后 30 日内，填报指南见 quanquan 仓库 `docs/psb-filing/README.md`），
+   取得后填 `filings.psb` 的 `text`（完整文字）与 `code`（14 位编号），页脚自动显示公安备案图标并链接到查询页；没填时正式发布检查只提醒。
 3. **运营主体对齐**：协议、应用商店开发者、App 备案都变更为公司后，把 `operator.effective` 改为 `true`。
 4. **联系邮箱**：目前沿用协议里公布的邮箱；建议启用公司域名邮箱，与 App 协议里的联系邮箱一起改。
 5. **搜索平台**：上线后在百度搜索资源平台、Google Search Console、Bing Webmaster Tools 验证域名，验证码填 `site.yaml`，提交站点地图。

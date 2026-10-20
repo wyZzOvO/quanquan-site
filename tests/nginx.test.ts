@@ -114,6 +114,8 @@ test('官网页面的安全响应头：不放开内联脚本，禁用麦克风�
   assert.ok(headers.includes('geolocation=()'))
   assert.ok(headers.includes('nosniff'))
   assert.ok(headers.includes('Referrer-Policy'))
+  assert.match(headers, /Strict-Transport-Security "max-age=31536000" always;/)
+  assert.ok(!headers.includes('preload'))
   // 每个返回 HTML 的 location 都要带上这组响应头（location 里有 add_header 时不继承 server 级）
   for (const block of conf.split(/\n(?=location )/).filter((b) => b.includes('index.html') || b.includes('/404.html'))) {
     assert.ok(block.includes('quanquan-site-headers.conf'), block.split('\n')[0] ?? '')

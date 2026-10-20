@@ -1,16 +1,18 @@
 ---
 /**
  * 页脚（需求文档 5.3）：公司全称、版权年份、协议与支持链接、有效的网站备案与公安备案；
- * 未取得的编号不展示，也不用示例字符串占位。
+ * 未取得的编号不展示，也不用示例字符串占位。公安备案号前面是本站自制的公安备案图标（PsbIcon），
+ * 链接到全国互联网安全管理服务平台的查询页（见 lib/filings.ts）。
  */
 import { content, copyrightYears } from '../lib/content.ts'
-import { PSB_PATTERN } from '../lib/loadContent.ts'
+import { footerFilings } from '../lib/filings.ts'
 import { gamePath } from '../lib/pages.ts'
 import { webEntryHref } from '../lib/entries.ts'
+import PsbIcon from './PsbIcon.astro'
 
 const { company, settings, publishedGames, releases } = content
 const web = webEntryHref(releases)
-const psbCode = company.filings.psb?.match(PSB_PATTERN)?.[1] ?? null
+const filings = footerFilings(company.filings)
 
 const columns = [
   {
@@ -74,18 +76,20 @@ const columns = [
         <li><a href="/legal/privacy-policy.html">隐私政策</a></li>
         <li><a href="/legal/user-agreement.html">用户服务协议</a></li>
         {
-          company.filings.icp ? (
-            <li>
-              <a href="https://beian.miit.gov.cn/">{company.filings.icp}</a>
-            </li>
-          ) : null
-        }
-        {
-          company.filings.psb && psbCode ? (
-            <li>
-              <a href={`https://beian.mps.gov.cn/#/query/webSearch?code=${psbCode}`}>{company.filings.psb}</a>
-            </li>
-          ) : null
+          filings.map((f) =>
+            f.kind === 'psb' ? (
+              <li>
+                <a class="psb-link" href={f.href} data-filing="psb">
+                  <PsbIcon />
+                  <span>{f.text}</span>
+                </a>
+              </li>
+            ) : (
+              <li>
+                <a href={f.href} data-filing="icp">{f.text}</a>
+              </li>
+            ),
+          )
         }
       </ul>
     </div>
@@ -170,5 +174,12 @@ const columns = [
     flex-wrap: wrap;
     gap: 0 18px;
     list-style: none;
+  }
+
+  /* 公安备案：图标与号码同一行、垂直居中 */
+  .legal-links .psb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 </style>
