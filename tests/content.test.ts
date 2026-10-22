@@ -78,7 +78,7 @@ test('安装包必须提供大小与 SHA-256', () => {
     Object.assign(r.channels[1], {
       kind: 'apk',
       status: 'available',
-      url: 'https://www.monster-ovo.cn/downloads/yumiquan.apk',
+      url: 'https://www.monster-ovo.cn/downloads/banpai.apk',
       version: '1.0.0',
       releasedAt: '2026-10-19',
     })

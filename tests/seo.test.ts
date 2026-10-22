@@ -13,7 +13,7 @@ function ctx(effective: boolean): JsonLdContext {
   const c = load()
   return {
     siteUrl: SITE,
-    siteName: '玉米圈',
+    siteName: '半拍',
     company: { ...c.company, operator: { ...c.company.operator, effective } },
     product: c.product,
     releases: c.releases,
@@ -23,13 +23,13 @@ function ctx(effective: boolean): JsonLdContext {
 
 const page: PageSeo = {
   path: '/support/',
-  title: '玉米圈帮助与支持',
+  title: '半拍帮助与支持',
   description: '常见问题',
   ogImage: '/og/support.jpg',
   ogImageAlt: '支持',
   breadcrumbs: [{ name: '支持', path: '/support/' }],
   dateModified: '2026-10-19',
-  faqs: [{ question: '玉米圈是什么？', answer: '见[功能](/features/)。' }],
+  faqs: [{ question: '半拍是什么？', answer: '见[功能](/features/)。' }],
 }
 
 function nodes(data: Record<string, unknown>) {

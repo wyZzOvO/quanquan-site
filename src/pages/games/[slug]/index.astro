@@ -1,7 +1,7 @@
 ---
 /**
  * 游戏专题（需求文档第 7 章、FR12）：H1、引导说明、适用场景、关键约定、三步说明、兼容性提示、FAQ 与操作入口；
- * 审核者、实质更新日期与适用范围写在页面上。游戏官方规则与玉米圈当前功能分开说明。
+ * 审核者、实质更新日期与适用范围写在页面上。游戏官方规则与半拍当前功能分开说明。
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro'
 import GameArt from '../../../components/GameArt.astro'
@@ -123,7 +123,7 @@ const multiTitle = game.titles.length > 1
 
     <section class="section bg-alt" aria-labelledby="steps-title">
       <div class="container">
-        <h2 class="headline-section center" id="steps-title" data-reveal>在玉米圈，三步开始</h2>
+        <h2 class="headline-section center" id="steps-title" data-reveal>在半拍，三步开始</h2>
         <ol class="steps">
           {
             game.steps.map((s, i) => (
@@ -145,18 +145,18 @@ const multiTitle = game.titles.length > 1
         <div class="center compat-head" data-reveal>
           <h2 class="headline-section" id="compat-title">联机条件</h2>
           <p class="lede">
-            游戏本身的联机规则，和玉米圈当前开放的找队能力，是两件事。下面分开说明，组队前请再和队友确认一次。
+            游戏本身的联机规则，和半拍当前开放的找队能力，是两件事。下面分开说明，组队前请再和队友确认一次。
           </p>
         </div>
 
         <div class="compat-grid">
           <div class="compat-card" data-reveal="1">
-            <h3 class="headline-card">玉米圈当前开放</h3>
+            <h3 class="headline-card">半拍当前开放</h3>
             <p class="scroll-hint small text-2" id={`table-hint-${game.slug}`}>表格较宽时可以左右滑动查看。</p>
             <div
               class="table-scroll"
               role="region"
-              aria-label={`${game.displayName}各作品在玉米圈的开放情况`}
+              aria-label={`${game.displayName}各作品在半拍的开放情况`}
               aria-describedby={`table-hint-${game.slug}`}
               tabindex="0"
             >
@@ -255,7 +255,7 @@ const multiTitle = game.titles.length > 1
         <section class="section" aria-labelledby="related-title">
           <div class="container">
             <h2 class="headline-section center" id="related-title" data-reveal>
-              也在玉米圈找搭子
+              也在半拍找搭子
             </h2>
             <div class="related">
               {related.map((g) => (
@@ -493,7 +493,7 @@ const multiTitle = game.titles.length > 1
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* 第一张（玉米圈当前开放，含表格）占满一行，下面两张并排 */
+    /* 第一张（半拍当前开放，含表格）占满一行，下面两张并排 */
     .compat-grid .compat-card:first-child {
       grid-column: 1 / -1;
     }

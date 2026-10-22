@@ -1,7 +1,7 @@
 /**
  * 元信息与结构化数据（需求文档 15、16、17 章）。
  * JSON-LD 只用页面上可见、配置里真实存在的信息：不输出评分、评论、价格、下载次数；
- * 公司成为玉米圈的生效运营主体之前，不写产品的 publisher 关系。
+ * 公司成为半拍的生效运营主体之前，不写产品的 publisher 关系。
  */
 import type { Company, Product, Releases } from './schema.ts'
 import { availablePlatforms } from './downloads.ts'

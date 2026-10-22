@@ -75,7 +75,7 @@ lacks '分享落地页仍由后端处理' "$SHARE" '这个页面不存在'
 IM_STATUS="$(status "$BASE/im")"
 if [ "$IM_STATUS" = 200 ] || [ "$IM_STATUS" = 404 ]; then
   IM_BODY="$(body "$BASE/im")"
-  lacks '/im 仍由后端处理（不是官网页面）' "$IM_BODY" '玉米圈官网'
+  lacks '/im 仍由后端处理（不是官网页面）' "$IM_BODY" '半拍官网'
 else
   echo "  ✓ /im 由后端处理（$IM_STATUS）"
 fi

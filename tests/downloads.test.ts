@@ -26,7 +26,7 @@ function channel(patch: Partial<DownloadChannel>): DownloadChannel {
 function releases(channels: DownloadChannel[], webEnabled = true): Releases {
   return {
     schemaVersion: 1,
-    product: '玉米圈',
+    product: '半拍',
     updatedAt: '2026-10-19',
     channels,
     web: { enabled: webEnabled, url: '/web/', note: '网页版' },
@@ -34,12 +34,12 @@ function releases(channels: DownloadChannel[], webEnabled = true): Releases {
   }
 }
 
-test('没有已上线渠道时主按钮是"查看获取方式"，有了才是"下载玉米圈"', () => {
+test('没有已上线渠道时主按钮是"查看获取方式"，有了才是"下载半拍"', () => {
   const none = releases([channel({})])
   assert.equal(hasAvailableChannel(none), false)
   assert.deepEqual(primaryCta(none), { label: '查看获取方式', href: '/download/' })
   const live = releases([channel({ status: 'available', url: 'https://apps.apple.com/cn/app/id1', version: '1.0.0', releasedAt: '2026-10-19' })])
-  assert.deepEqual(primaryCta(live), { label: '下载玉米圈', href: '/download/' })
+  assert.deepEqual(primaryCta(live), { label: '下载半拍', href: '/download/' })
 })
 
 test('只有 available / beta 的渠道给可点的按钮', () => {

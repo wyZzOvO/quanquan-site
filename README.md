@@ -1,6 +1,6 @@
-# 半亩晴空 / 玉米圈官网（quanquan-site）
+# 半亩晴空 / 半拍官网（quanquan-site）
 
-长沙半亩晴空信息科技有限公司的官方网站，以玉米圈为核心产品。需求依据：《半亩晴空与玉米圈官网建设需求及技术文档 V1.0》（2026-10-19）。
+长沙半亩晴空信息科技有限公司的官方网站，以半拍为核心产品。需求依据：《半亩晴空与半拍官网建设需求及技术文档 V1.0》（2026-10-19）。
 
 - **技术栈**：Astro 7（静态生成）+ TypeScript（strict）+ 原生 CSS。产物是纯静态 HTML，没有常驻服务、数据库和第三方脚本。
 - **页面**：首页、功能、游戏总览、四个游戏专题（双影奇境、星露谷物语、泰拉瑞亚、怪物猎人）、下载、关于半亩晴空、支持、404，
@@ -37,7 +37,7 @@ Node 版本见 `.node-version`（≥ 22.22）。
 | `company.yaml` | 公司全称、简介、运营主体是否已生效（`operator.effective`）、联系邮箱、网站 ICP 与公安备案号 |
 | `product.yaml` | 统一产品定义、已开放能力的开关（关掉的能力不在官网宣传）、最低年龄、收费说明 |
 | `releases.json` | 下载渠道（`available` / `beta` / `coming_soon` / `maintenance` / `unsupported`）、网页版入口 |
-| `games/*.yaml` | 游戏专题：场景、组队约定、三步说明、玉米圈当前开放的平台、带来源的官方规则、FAQ |
+| `games/*.yaml` | 游戏专题：场景、组队约定、三步说明、半拍当前开放的平台、带来源的官方规则、FAQ |
 | `faqs.yaml` | 支持中心 FAQ |
 | `assets.yaml` | 图片素材与授权登记（`src/assets` 下每个文件都要登记、尺寸一致、审核通过） |
 | `site.yaml` | 搜索平台验证码、训练爬虫开关、商标说明 |
@@ -75,11 +75,11 @@ docs/               运营手册、验收记录
 ## SEO 与 GEO
 
 - 每页独立的 title、description、H1、规范地址、OG 图；`lang="zh-CN"`；百度移动适配（`applicable-device`、`no-transform`）。
-- JSON-LD：Organization（公司全称，别名"半亩晴空"）、WebSite、SoftwareApplication（玉米圈）、WebPage、BreadcrumbList，
+- JSON-LD：Organization（公司全称，别名"半亩晴空"）、WebSite、SoftwareApplication（半拍）、WebPage、BreadcrumbList，
   有可见问答的页面加 FAQPage；游戏页用 VideoGame 指向官方网站。不输出评分、评论、价格、下载量；公司成为生效运营主体前不输出产品的 publisher。
 - `sitemap.xml` 只列可收录页面，lastmod 用内容的实质更新日期；`robots.txt` 允许搜索与 AI 检索爬虫，接口不抓取，训练爬虫由 `site.yaml` 单独控制；
   分享与推广落地页靠自带的 noindex 处理，不在 robots 里屏蔽。
-- 游戏页把"游戏官方规则（带来源与核对日期）""玉米圈当前开放的能力""组队前要确认的事"分开写，便于搜索与生成式引擎准确引用。
+- 游戏页把"游戏官方规则（带来源与核对日期）""半拍当前开放的能力""组队前要确认的事"分开写，便于搜索与生成式引擎准确引用。
 - `llms.txt` 是给采用这一约定的系统的公开导航，内容与网页同源，不是收录保证。
 
 ## 上线前必须完成

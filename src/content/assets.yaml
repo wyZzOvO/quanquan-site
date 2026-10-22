@@ -7,70 +7,70 @@ assets:
     alt: ''
     width: 1024
     height: 1024
-    rightsSource: 公司自有：玉米圈 App 图标源文件（ju-mobile 工程 AppIcon 1024）
+    rightsSource: 用户提供的半拍图标「水印-01.png」，由移动端统一生成 1024px 白底版本
     approvalState: approved
     demoDataOnly: true
   - path: brand/mark.png
     alt: ''
-    width: 111
+    width: 192
     height: 192
-    rightsSource: 公司自有：由 App 图标提取的"S"标识（scripts/make-icons.mjs 生成）
+    rightsSource: 用户提供的半拍图标「水印-01.png」提取的圆形标识（scripts/make-icons.mjs 生成）
     approvalState: approved
     demoDataOnly: true
 
   - path: screens/team-list.png
-    alt: 玉米圈找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由
+    alt: 半拍找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/party-detail.png
-    alt: 玉米圈队伍页界面示意：队伍的平台、开始时间、人数和语音习惯，以及查看加入信息与"准备好了"
+    alt: 半拍队伍页界面示意：队伍的平台、开始时间、人数和语音习惯，以及查看加入信息与"准备好了"
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/find.png
-    alt: 玉米圈"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件
+    alt: 半拍"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/game-card.png
-    alt: 玉米圈游戏名片界面示意：填写游戏平台、等级和语音习惯
+    alt: 半拍游戏名片界面示意：填写游戏平台、等级和语音习惯
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/campaigns-stardew.png
-    alt: 玉米圈长期农场界面示意：星露谷物语正在招募的长期农场，显示平台、进度和空位
+    alt: 半拍长期农场界面示意：星露谷物语正在招募的长期农场，显示平台、进度和空位
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/campaigns-terraria.png
-    alt: 玉米圈长期世界界面示意：泰拉瑞亚长期世界按平台筛选，未开放的平台单独标注
+    alt: 半拍长期世界界面示意：泰拉瑞亚长期世界按平台筛选，未开放的平台单独标注
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/campaign-new-terraria.png
-    alt: 玉米圈创建长期世界界面示意：为泰拉瑞亚世界设置名称、谁能看到和下一场时间
+    alt: 半拍创建长期世界界面示意：为泰拉瑞亚世界设置名称、谁能看到和下一场时间
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true
   - path: screens/squads.png
-    alt: 玉米圈固定队界面示意：固定队的成员人数、常玩时间和进语音入口
+    alt: 半拍固定队界面示意：固定队的成员人数、常玩时间和进语音入口
     width: 1290
     height: 2634
-    rightsSource: 自制：玉米圈网页版演示模式截图（演示数据）
+    rightsSource: 自制：半拍网页版演示模式截图（演示数据）
     approvalState: approved
     demoDataOnly: true

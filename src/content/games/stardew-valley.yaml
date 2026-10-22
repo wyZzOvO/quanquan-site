@@ -1,4 +1,4 @@
-# 星露谷物语专题。玉米圈当前开放范围见 docs/campaign-games-v1.md 的平台矩阵：只开 PC 组（Steam / GOG），
+# 星露谷物语专题。半拍当前开放范围见 docs/campaign-games-v1.md 的平台矩阵：只开 PC 组（Steam / GOG），
 # 主机组建好但关闭。后台改了矩阵后，同步修改 openPlatforms、productNotes 与 FAQ。
 slug: stardew-valley
 status: published
@@ -9,8 +9,8 @@ englishName: Stardew Valley
 art: stardew-valley
 
 seo:
-  title: 星露谷物语找农友与联机搭子 - 玉米圈
-  description: 从今晚一起种地，到每周固定经营农场。在玉米圈找作息和游玩节奏合拍的星露谷农友，开长期农场、约好每一次的时间。
+  title: 星露谷物语找农友与联机搭子 - 半拍
+  description: 从今晚一起种地，到每周固定经营农场。在半拍找作息和游玩节奏合拍的星露谷农友，开长期农场、约好每一次的时间。
   keywords: [星露谷物语找农友, 星露谷联机, 星露谷物语联机搭子, 星露谷长期农场]
 
 card:
@@ -18,7 +18,7 @@ card:
   summary: 从今晚一起种地，到每周固定经营农场，先找到节奏合拍的人。
 
 h1: 找到作息合拍的|星露谷农友
-lead: 星露谷的多人农场能玩很久，最难的是找到作息和节奏都合得来的人。从今晚一起种地，到每周固定经营同一个农场：在玉米圈先对齐时间、进度和原版或模组，再一起开工。
+lead: 星露谷的多人农场能玩很久，最难的是找到作息和节奏都合得来的人。从今晚一起种地，到每周固定经营同一个农场：在半拍先对齐时间、进度和原版或模组，再一起开工。
 
 titles:
   - code: stardew_valley
@@ -98,19 +98,19 @@ faqs:
   - id: host
     question: 谁负责开农场？
     answer: |
-      多人农场在房主的存档里，由存档所在的玩家当房主。按官方说明，房主不在线时其他人进不了这个农场，所以房主的在线时间决定了大家什么时候能玩。在玉米圈里，创建长期农场的人就是房主，负责安排每一次的时间。
+      多人农场在房主的存档里，由存档所在的玩家当房主。按官方说明，房主不在线时其他人进不了这个农场，所以房主的在线时间决定了大家什么时候能玩。在半拍里，创建长期农场的人就是房主，负责安排每一次的时间。
 
       PC 版最多 8 人一起玩，每位农友需要一间小屋；以官方最新说明为准。
   - id: console
-    question: 主机版能用玉米圈找农友吗？
+    question: 主机版能用半拍找农友吗？
     answer: |
       目前只开放 PC 版（Steam、GOG）的找队与长期农场，PlayStation、Xbox、Switch 版暂未开放匹配。开放后会更新这一页。
 
 screen: campaigns-stardew
-screenAlt: 玉米圈长期农场界面示意：星露谷物语正在招募的长期农场，显示平台、进度和空位
+screenAlt: 半拍长期农场界面示意：星露谷物语正在招募的长期农场，显示平台、进度和空位
 demoParties: []
 
 related: [split-fiction, terraria, monster-hunter]
-reviewedBy: 玉米圈产品团队
+reviewedBy: 半拍产品团队
 updatedAt: 2026-10-19
-scope: 适用于在玉米圈为星露谷物语找农友；游戏内的联机方式、人数与跨平台规则以游戏官方说明为准。
+scope: 适用于在半拍为星露谷物语找农友；游戏内的联机方式、人数与跨平台规则以游戏官方说明为准。

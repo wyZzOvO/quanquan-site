@@ -60,7 +60,7 @@ if (pending.length) {
 }
 
 if (!company.operator.effective) {
-  notes.push('公司还不是玉米圈的生效运营主体（company.yaml → operator.effective = false）：页面显示"运营主体变更中、以协议为准"')
+  notes.push('公司还不是半拍的生效运营主体（company.yaml → operator.effective = false）：页面显示"运营主体变更中、以协议为准"')
 }
 const v = settings.verification
 if (!v.baidu || !v.google || !v.bing) {

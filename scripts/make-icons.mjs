@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * 由 App 图标（src/assets/brand/app-icon-source.png，取自 ju-mobile 的 1024 图标，四角是黑色）生成：
+ * 由 App 图标（src/assets/brand/app-icon-source.png，移动端统一生成的 1024px 白底图标）生成：
  *   public/favicon.ico（16 / 32 / 48）、public/apple-touch-icon.png（180）、public/icon-192.png、public/icon-512.png
- *   src/assets/brand/mark.png：去掉白底的"S"标识（导航与页脚用，透明底）
+ *   src/assets/brand/mark.png：去掉白底的圆形标识（导航与首页用，透明底）
  * 用法：node scripts/make-icons.mjs
  */
 import { writeFile } from 'node:fs/promises'
@@ -13,13 +13,8 @@ import sharp from 'sharp'
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const SOURCE = path.join(ROOT, 'src/assets/brand/app-icon-source.png')
 const PUBLIC = path.join(ROOT, 'public')
-/** 裁掉四角黑色圆角外的区域，得到满版白底图标 */
-const INSET = 56
-
 async function fullBleed() {
-  const meta = await sharp(SOURCE).metadata()
-  const size = (meta.width ?? 1024) - INSET * 2
-  return sharp(SOURCE).extract({ left: INSET, top: INSET, width: size, height: size }).png().toBuffer()
+  return sharp(SOURCE).flatten({ background: '#ffffff' }).png().toBuffer()
 }
 
 async function png(buffer, size) {
@@ -64,11 +59,10 @@ async function main() {
   const rgba = Buffer.alloc(width * height * 4)
   for (let i = 0; i < width * height; i++) {
     const a = gray.data[i] ?? 0
-    rgba[i * 4] = 22
-    rgba[i * 4 + 1] = 22
-    rgba[i * 4 + 2] = 30
-    // 压掉底色里的轻微噪点
-    rgba[i * 4 + 3] = a < 24 ? 0 : a
+    rgba[i * 4] = 0
+    rgba[i * 4 + 1] = 0
+    rgba[i * 4 + 2] = 0
+    rgba[i * 4 + 3] = a
   }
   const mark = await sharp(rgba, { raw: { width, height, channels: 4 } })
     .trim({ threshold: 1 })

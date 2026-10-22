@@ -45,7 +45,7 @@ function frame({ eyebrow, title, subtitle, visual }) {
   .art{position:absolute;right:56px;top:95px;width:440px;height:440px;border-radius:40px;overflow:hidden;box-shadow:0 30px 70px -24px rgba(22,22,30,.35)}
   .art svg{width:100%;height:100%;display:block}
   </style></head><body><div class="wrap"><div class="text">
-  <div class="brand"><img src="${mark}" alt="">玉米圈</div>
+  <div class="brand"><img src="${mark}" alt="">半拍</div>
   ${eyebrow ? `<div class="eyebrow">${esc(eyebrow)}</div>` : '<div style="height:44px"></div>'}
   <h1>${title}</h1>
   <p class="sub">${esc(subtitle)}</p>
@@ -71,13 +71,13 @@ const jobs = [
   {
     file: 'games',
     eyebrow: '游戏',
-    title: '这些游戏，<br>在玉米圈找搭子',
+    title: '这些游戏，<br>在半拍找搭子',
     subtitle: content.publishedGames.map((g) => g.displayName).join(' · '),
     visual: phone(await shot('campaigns-stardew')),
   },
-  { file: 'download', eyebrow: '下载', title: '获取玉米圈', subtitle: 'iPhone · Android · 网页版', visual: phone(await shot('team-list')) },
+  { file: 'download', eyebrow: '下载', title: '获取半拍', subtitle: 'iPhone · Android · 网页版', visual: phone(await shot('team-list')) },
   { file: 'about', eyebrow: '关于我们', title: '关于半亩晴空', subtitle: content.company.relation, visual: phone(await shot('squads')) },
-  { file: 'support', eyebrow: '支持', title: '玉米圈<br>帮助与支持', subtitle: '常见问题 · 投诉举报 · 个人信息请求', visual: phone(await shot('party-detail')) },
+  { file: 'support', eyebrow: '支持', title: '半拍<br>帮助与支持', subtitle: '常见问题 · 投诉举报 · 个人信息请求', visual: phone(await shot('party-detail')) },
 ]
 for (const game of content.publishedGames) {
   jobs.push({

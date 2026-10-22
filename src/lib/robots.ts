@@ -57,7 +57,7 @@ export function buildRobots({ siteUrl, indexable, allowTraining }: RobotsOptions
     return ['# 预览 / 开发环境：禁止抓取', 'User-agent: *', 'Disallow: /', ''].join('\n')
   }
   return [
-    '# 玉米圈官网：公开页面允许搜索抓取；接口与后台不抓取。robots 不是访问控制。',
+    '# 半拍官网：公开页面允许搜索抓取；接口与后台不抓取。robots 不是访问控制。',
     group(['*'], true),
     '',
     '# 搜索与用户触发的检索（规则与上面相同，单独列出的爬虫组不继承 * 组）',

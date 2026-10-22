@@ -16,7 +16,7 @@ const filings = footerFilings(company.filings)
 
 const columns = [
   {
-    title: '玉米圈',
+    title: '半拍',
     links: [
       { href: '/', label: '产品首页' },
       { href: '/features/', label: '功能' },
@@ -70,7 +70,7 @@ const columns = [
     <div class="legal-bar small">
       <p class="copyright">
         Copyright © {copyrightYears()} {company.legalName} 保留所有权利。
-        {company.operator.effective ? <span class="operator">玉米圈由{company.legalName}运营。</span> : null}
+        {company.operator.effective ? <span class="operator">半拍由{company.legalName}运营。</span> : null}
       </p>
       <ul class="legal-links">
         <li><a href="/legal/privacy-policy.html">隐私政策</a></li>

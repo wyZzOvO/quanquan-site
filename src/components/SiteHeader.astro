@@ -21,7 +21,7 @@ const links = [
   { href: '/support/', label: '支持' },
   { href: '/about/', label: '关于半亩晴空' },
 ]
-const mobileLinks = [{ href: '/', label: '玉米圈' }, ...links.slice(0, 2), { href: '/download/', label: '下载' }, ...links.slice(2)]
+const mobileLinks = [{ href: '/', label: '半拍' }, ...links.slice(0, 2), { href: '/download/', label: '下载' }, ...links.slice(2)]
 const web = webEntryHref(content.releases)
 const cta = primaryCta(content.releases)
 const ctaShort = navCtaLabel(content.releases)
@@ -33,9 +33,9 @@ function isCurrent(href: string): boolean {
 
 <header class="site-header">
   <div class="bar container-wide">
-    <a class="brand" href="/" aria-label="玉米圈首页" aria-current={currentPath === '/' ? 'page' : undefined}>
-      <Image src={mark} alt="" width={13} height={22} densities={[2, 3]} loading="eager" decoding="async" class="brand-mark" />
-      <span class="brand-name">玉米圈</span>
+    <a class="brand" href="/" aria-label="半拍首页" aria-current={currentPath === '/' ? 'page' : undefined}>
+      <Image src={mark} alt="" width={22} height={22} densities={[2, 3]} loading="eager" decoding="async" class="brand-mark" />
+      <span class="brand-name">半拍</span>
     </a>
 
     <nav class="nav-desktop" aria-label="主导航">
@@ -138,7 +138,7 @@ function isCurrent(href: string): boolean {
   }
 
   .brand-mark {
-    width: 13px;
+    width: 22px;
     height: 22px;
   }
 

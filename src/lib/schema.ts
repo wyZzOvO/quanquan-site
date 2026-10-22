@@ -81,10 +81,10 @@ export const CompanySchema = z.strictObject({
   addressRegion: text,
   addressLocality: text,
   introduction: text,
-  /** 与玉米圈的关系 */
+  /** 与半拍的关系 */
   relation: text,
   operator: z.strictObject({
-    /** 公司已经是玉米圈的生效运营主体（协议、应用商店、备案都已对齐）后改为 true */
+    /** 公司已经是半拍的生效运营主体（协议、应用商店、备案都已对齐）后改为 true */
     effective: z.boolean(),
     /** effective = false 时在关于页、下载页展示的说明 */
     pendingNote: text,
@@ -196,9 +196,9 @@ export const GameTitleSchema = z.strictObject({
   englishName: text,
   /** open 已开放找队；planned 规划中（不放找队操作） */
   supportStatus: z.enum(SUPPORT_STATUSES),
-  /** 玉米圈当前开放的平台（不是游戏本身支持的全部平台） */
+  /** 半拍当前开放的平台（不是游戏本身支持的全部平台） */
   openPlatforms: z.array(text),
-  /** 平台与联机的补充说明（玉米圈当前规则） */
+  /** 平台与联机的补充说明（半拍当前规则） */
   platformNote: text,
   officialSite: z.url({ protocol: /^https$/ }),
 })
@@ -232,7 +232,7 @@ export const GamePageSchema = z.strictObject({
     officialFacts: z.array(OfficialFactSchema),
     /** 官方规则的核对日期 */
     checkedAt: isoDate,
-    /** 玉米圈当前开放的找队能力 */
+    /** 半拍当前开放的找队能力 */
     productNotes: z.array(text).min(1),
     /** 组队前需要自己确认的事项 */
     userChecks: z.array(text).min(1),

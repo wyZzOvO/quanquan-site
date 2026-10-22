@@ -2,7 +2,7 @@
   "name": "quanquan-site",
   "private": true,
   "version": "1.0.0",
-  "description": "半亩晴空 / 玉米圈官方网站：Astro 静态生成，产物是纯静态 HTML，部署在现有域名根路径，/web/、/api/ 等业务路由保持不变",
+  "description": "半亩晴空 / 半拍官方网站：Astro 静态生成，产物是纯静态 HTML，部署在现有域名根路径，/web/、/api/ 等业务路由保持不变",
   "type": "module",
   "engines": {
     "node": ">=22.22.0"

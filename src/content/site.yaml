@@ -1,5 +1,5 @@
 # 站点设置。改完执行 npm run build，构建会校验字段。
-siteName: 玉米圈
+siteName: 半拍
 
 # 搜索平台的站点验证码（在百度搜索资源平台、Google Search Console、Bing Webmaster Tools 等后台获取，不是密钥）。
 # 拿到后填在这里，页面 <head> 会输出对应的 meta 标签；没有就保持 null。
@@ -15,4 +15,4 @@ crawlers:
   # 改成 true 即允许训练爬虫，robots.txt 会随之变化。
   allowTraining: false
 
-trademarkNotice: 本站提到的游戏名称、平台名称及相关商标归各自权利人所有，仅用于说明玉米圈适用的找队场景，不代表玉米圈与相关游戏厂商或平台存在合作或授权关系。
+trademarkNotice: 本站提到的游戏名称、平台名称及相关商标归各自权利人所有，仅用于说明半拍适用的找队场景，不代表半拍与相关游戏厂商或平台存在合作或授权关系。

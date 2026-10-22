@@ -1,4 +1,4 @@
-# 泰拉瑞亚专题。玉米圈当前开放范围见 docs/campaign-games-v1.md：各平台各自成组，只开 Steam，跨平台标为"未核实"。
+# 泰拉瑞亚专题。半拍当前开放范围见 docs/campaign-games-v1.md：各平台各自成组，只开 Steam，跨平台标为"未核实"。
 slug: terraria
 status: published
 order: 3
@@ -8,8 +8,8 @@ englishName: Terraria
 art: terraria
 
 seo:
-  title: 泰拉瑞亚找搭子与开荒组队 - 玉米圈
-  description: 开新世界、推进 Boss，或者一起建家。在玉米圈找泰拉瑞亚搭子，先把世界阶段、难度、装备约定和原版或模组说清楚。
+  title: 泰拉瑞亚找搭子与开荒组队 - 半拍
+  description: 开新世界、推进 Boss，或者一起建家。在半拍找泰拉瑞亚搭子，先把世界阶段、难度、装备约定和原版或模组说清楚。
   keywords: [泰拉瑞亚找搭子, 泰拉瑞亚联机, 泰拉瑞亚开荒组队, tModLoader 联机]
 
 card:
@@ -17,7 +17,7 @@ card:
   summary: 开新世界、推进 Boss，或一起建家。先说清世界阶段和装备约定。
 
 h1: 找人一起开荒，|也一起把世界建起来
-lead: 在泰拉瑞亚，一起开荒和一起建家是两种完全不同的玩法。开新世界、推进 Boss，或者一起慢慢建家：在玉米圈先把世界阶段、难度、装备约定和原版或模组说清楚，再进同一个世界。
+lead: 在泰拉瑞亚，一起开荒和一起建家是两种完全不同的玩法。开新世界、推进 Boss，或者一起慢慢建家：在半拍先把世界阶段、难度、装备约定和原版或模组说清楚，再进同一个世界。
 
 titles:
   - code: terraria
@@ -94,21 +94,21 @@ faqs:
   - id: mods
     question: 原版和模组能放在同一队吗？
     answer: |
-      不能。按 tModLoader 官方说明，原版玩家不能与 tModLoader 玩家联机；玉米圈找队时，原版队伍和使用 tModLoader 模组的队伍也不会互相匹配。用模组的队伍，请在说明里写清楚模组列表，加入的人装好同样的模组再进世界。
+      不能。按 tModLoader 官方说明，原版玩家不能与 tModLoader 玩家联机；半拍找队时，原版队伍和使用 tModLoader 模组的队伍也不会互相匹配。用模组的队伍，请在说明里写清楚模组列表，加入的人装好同样的模组再进世界。
   - id: progress
     question: 装备和世界进度怎么约定？
     answer: |
       在队伍说明里写明世界处于什么阶段、打到了哪个 Boss，以及能不能带入其他世界的装备。想要"一起从零开荒"的，可以写明"新角色、新世界"，避免有人带着成品装备进来。
   - id: platform
-    question: 手机、主机版能用玉米圈找泰拉瑞亚搭子吗？
+    question: 手机、主机版能用半拍找泰拉瑞亚搭子吗？
     answer: |
       目前只开放 Steam 版的找队与长期世界，其他平台暂未开放匹配。按官方说明，PC 与手机版在版本一致时已经可以互相联机，主机的跨平台计划在 1.4.6 更新中推出；以官方最新说明为准。
 
 screen: campaign-new-terraria
-screenAlt: 玉米圈创建长期世界界面示意：为泰拉瑞亚世界设置名称、谁能看到和下一场时间
+screenAlt: 半拍创建长期世界界面示意：为泰拉瑞亚世界设置名称、谁能看到和下一场时间
 demoParties: []
 
 related: [stardew-valley, monster-hunter, split-fiction]
-reviewedBy: 玉米圈产品团队
+reviewedBy: 半拍产品团队
 updatedAt: 2026-10-19
-scope: 适用于在玉米圈为泰拉瑞亚找搭子；游戏内的联机方式、人数、跨平台与模组规则以游戏官方及 tModLoader 的说明为准。
+scope: 适用于在半拍为泰拉瑞亚找搭子；游戏内的联机方式、人数、跨平台与模组规则以游戏官方及 tModLoader 的说明为准。

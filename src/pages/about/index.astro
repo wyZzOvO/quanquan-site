@@ -1,6 +1,6 @@
 ---
 /**
- * 关于半亩晴空（需求文档 FR15、17.2）：公司全称、与玉米圈的关系、产品定位、有效联系渠道。
+ * 关于半亩晴空（需求文档 FR15、17.2）：公司全称、与半拍的关系、产品定位、有效联系渠道。
  * 公司成为生效运营主体之前，只写"变更中、以协议为准"，不提前写运营者表述；不生成团队规模、融资、合作等未提供的事实。
  */
 import BaseLayout from '../../layouts/BaseLayout.astro'
@@ -53,7 +53,7 @@ const contacts = company.contacts.filter((c) => c.verified)
     <div class="container-text center relation-text">
       <p>{company.relation}{product.definition}</p>
       <p class="operator">
-        {company.operator.effective ? `玉米圈由${company.legalName}运营。` : company.operator.pendingNote}
+        {company.operator.effective ? `半拍由${company.legalName}运营。` : company.operator.pendingNote}
       </p>
       {
         company.operator.effective ? null : (

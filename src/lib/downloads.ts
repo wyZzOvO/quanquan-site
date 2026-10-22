@@ -83,10 +83,10 @@ export interface PrimaryCta {
   href: string
 }
 
-/** 首页与导航的主操作：有已上线渠道时"下载玉米圈"，否则"查看获取方式"（需求文档 5.3） */
+/** 首页与导航的主操作：有已上线渠道时"下载半拍"，否则"查看获取方式"（需求文档 5.3） */
 export function primaryCta(releases: Releases): PrimaryCta {
   return hasAvailableChannel(releases)
-    ? { label: '下载玉米圈', href: '/download/' }
+    ? { label: '下载半拍', href: '/download/' }
     : { label: '查看获取方式', href: '/download/' }
 }
 

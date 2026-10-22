@@ -36,7 +36,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
   <section class="hero">
     <div class="container center hero-copy">
       <p class="product-name">
-        <Image src={mark} alt="" width={15} height={26} densities={[2, 3]} loading="eager" class="product-mark" />
+        <Image src={mark} alt="" width={26} height={26} densities={[2, 3]} loading="eager" class="product-mark" />
         {product.name}
       </p>
       <h1 class="headline-hero">找到同频的游戏搭子</h1>
@@ -44,15 +44,15 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
       <CtaGroup align="center" />
     </div>
     <div class="hero-visual">
-      <Phone screen="party-detail" alt="玉米圈队伍页界面示意：平台、开始时间、人数与语音习惯" size="md" class="hero-side hero-left" />
+      <Phone screen="party-detail" alt="半拍队伍页界面示意：平台、开始时间、人数与语音习惯" size="md" class="hero-side hero-left" />
       <Phone
         screen="team-list"
-        alt="玉米圈找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由"
+        alt="半拍找队页界面示意：按游戏查看正在招人的队伍，卡片上显示平台、开始时间、空位和推荐理由"
         size="lg"
         priority
         class="hero-center"
       />
-      <Phone screen="game-card" alt="玉米圈游戏名片界面示意：填写平台、等级和语音习惯" size="md" class="hero-side hero-right" />
+      <Phone screen="game-card" alt="半拍游戏名片界面示意：填写平台、等级和语音习惯" size="md" class="hero-side hero-right" />
     </div>
     <p class="illustration-note">界面示意，展示内容为演示数据</p>
   </section>
@@ -111,7 +111,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
             <p class="eyebrow">找搭子</p>
             <h2 class="headline-section">聊得来，也玩得到一起</h2>
             <p class="lede">
-              说说你玩什么、在哪个平台、什么时候有空、习惯开麦还是只听。玉米圈按游戏需求和游玩习惯，帮你找到合适的人和队伍。
+              说说你玩什么、在哪个平台、什么时候有空、习惯开麦还是只听。半拍按游戏需求和游玩习惯，帮你找到合适的人和队伍。
             </p>
             <ul class="points">
               <li>游戏名片记下平台、进度和语音习惯，组队时不用反复介绍</li>
@@ -123,7 +123,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
             </a>
           </div>
           <div class="split-visual" data-reveal="1">
-            <Phone screen="find" alt='玉米圈"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件' size="lg" />
+            <Phone screen="find" alt='半拍"帮我找队"界面示意：选好游戏后填写平台、想打什么等找队条件' size="lg" />
             <p class="illustration-note">界面示意，展示内容为演示数据</p>
           </div>
         </div>
@@ -161,7 +161,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
             ) : null}
             <li>
               <strong>不录音、不保存</strong>
-              <span>语音实时传输，玉米圈不录制、不保存语音内容。</span>
+              <span>语音实时传输，半拍不录制、不保存语音内容。</span>
             </li>
           </ul>
           <a class="link-more" href="/features/#voice">
@@ -226,7 +226,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
   <section class="section-tight bg-alt company">
     <div class="container center" data-reveal>
       <p class="company-line">
-        {company.operator.effective ? `玉米圈由${company.legalName}运营。` : company.relation}
+        {company.operator.effective ? `半拍由${company.legalName}运营。` : company.relation}
       </p>
       <ul class="company-links">
         <li><a href="/about/">关于半亩晴空</a></li>
@@ -266,7 +266,7 @@ const secondaryGames = publishedGames.filter((g) => g.tier === 'secondary')
   }
 
   .product-mark {
-    width: 15px;
+    width: 26px;
     height: 26px;
   }
 
